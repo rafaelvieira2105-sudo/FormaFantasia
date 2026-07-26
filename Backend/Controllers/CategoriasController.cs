@@ -52,6 +52,18 @@ public class CategoriasController : ControllerBase
         return Ok(categoria);
     }
 
+    // GET /api/Categorias/destaque
+    [HttpGet("destaque")]
+    public IActionResult GetDestaque()
+    {
+        var categoria = _context.Categorias
+            .Include(c => c.CategoriaPai)
+            .Include(c => c.Subcategorias)
+            .FirstOrDefault(c => c.EmDestaque);
+        if (categoria == null) return NotFound();
+        return Ok(categoria);
+    }
+
     // POST /api/Categorias
     [HttpPost]
     [Authorize(Roles = "Admin")]
@@ -67,7 +79,8 @@ public class CategoriasController : ControllerBase
             Nome = dto.Nome,
             Descricao = dto.Descricao,
             Slug = slug,
-            CategoriaPaiId = dto.CategoriaPaiId
+            CategoriaPaiId = dto.CategoriaPaiId,
+            EmDestaque = dto.EmDestaque
         };
         _context.Categorias.Add(categoria);
         await _context.SaveChangesAsync();
@@ -86,6 +99,7 @@ public class CategoriasController : ControllerBase
         categoria.Descricao = dto.Descricao;
         categoria.Slug = string.IsNullOrEmpty(dto.Slug) ? GerarSlug(dto.Nome) : dto.Slug;
         categoria.CategoriaPaiId = dto.CategoriaPaiId;
+        categoria.EmDestaque = dto.EmDestaque;
 
         await _context.SaveChangesAsync();
         return Ok(categoria);
@@ -124,4 +138,6 @@ public class CategoriaDto
     public string Descricao { get; set; } = string.Empty;
     public string? Slug { get; set; }
     public int? CategoriaPaiId { get; set; }
+
+    public bool EmDestaque { get; set; } = false;
 }

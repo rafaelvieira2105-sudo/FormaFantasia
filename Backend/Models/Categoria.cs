@@ -13,4 +13,6 @@ public class Categoria
     public Categoria? CategoriaPai {get; set;}
 
     public ICollection<Categoria> Subcategorias { get; set;} = new List<Categoria>();
+
+    public bool EmDestaque { get; set; } = false;
 }

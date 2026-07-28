@@ -73,13 +73,13 @@ export default function Login() {
         <div className="tab-bar">
           <button
             className={modo === 'login' ? 'tab-btn active' : 'tab-btn'}
-            onClick={() => setModo('login')}
+            onClick={() => {setModo('login'); setErro('')}}
           >
             Entrar
           </button>
           <button
             className={modo === 'registo' ? 'tab-btn active' : 'tab-btn'}
-            onClick={() => setModo('registo')}
+            onClick={() => {setModo('registo'); setErro('')}}
           >
             Criar Conta
           </button>

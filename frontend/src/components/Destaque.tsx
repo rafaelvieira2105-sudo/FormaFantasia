@@ -67,8 +67,8 @@ export default function Destaque() {
                 <a href="" className="highlight-card">
                     <div className="highlight-visual hv-floral"></div>
                     <span className="highlight-badge badge-dest">Destaque</span>
-                    <h3>Papel de Parede Infantil</h3>
-                    <p>Padrões alegres e temáticos para quartos de criança. Materiais seguros e laváveis.</p>
+                    <h3></h3>
+                    <p></p>
                     <span className="highlight-link">
                         Ver produto
                         <svg viewBox="0 0 24 24">

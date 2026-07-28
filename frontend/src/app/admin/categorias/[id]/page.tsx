@@ -9,5 +9,9 @@ export default function EditarCategoria({ params }: { params: {id: string}}) {
 
     const [nome, setNome] = useState('')
     const [slug, setSlug] = useState('')
+    const [descricao, setDesricao] = useState('')
+    const [categoriaPaiId, setCategoriaPaiId] = useState(false)
+    const [categorias, setCategorias] = useState([])
     
+    useEffect(() => )
 }

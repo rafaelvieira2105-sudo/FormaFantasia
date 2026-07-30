@@ -7,13 +7,13 @@ export default function Categorias() {
     const [categorias, setCategorias] = useState([])
 
     useEffect(() => {
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/categorias`, { credentials: 'include' })
+        fetch(`/api/categorias`, { credentials: 'include' })
             .then(res => res.json())
             .then(data => setCategorias(data))
     })
 
     async function eliminarCategoria(id: number) {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/Produtos?categoriaId=${id}`, { credentials: 'include' })
+        const res = await fetch(`/api/Produtos?categoriaId=${id}`, { credentials: 'include' })
         const produtos = await res.json()
 
         if (produtos.length > 0) {
@@ -23,7 +23,7 @@ export default function Categorias() {
 
         if (!confirm('Tens a certeza que queres eliminar esta categoria?')) return
 
-        await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/Categorias/${id}`, {
+        await fetch(`/api/Categorias/${id}`, {
             method: 'DELETE',
             credentials: 'include'
         })

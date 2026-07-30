@@ -7,7 +7,7 @@ export default function CategoriasDestaque() {
     const [categorias, setCategorias] = useState([])
 
     useEffect(() => {
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/Categorias`)
+        fetch(`/api/Categorias`)
             .then(res => res.json())
             .then(data => setCategorias(data))
     }, [])
@@ -15,7 +15,7 @@ export default function CategoriasDestaque() {
     const [produtos, setProdutos] = useState([])
 
     useEffect(() => {
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/Produtos`)
+        fetch(`/api/Produtos`)
             .then(res => res.json())
             .then(data => setProdutos(data))
     }, [])

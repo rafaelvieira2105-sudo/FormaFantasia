@@ -15,7 +15,7 @@ export default function Nova() {
     const [categorias, setCategorias] = useState([])
 
     useEffect(() => {
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/Categorias`, { credentials: 'include' })
+        fetch(`/api/Categorias`, { credentials: 'include' })
             .then(res => res.json())
             .then(data => setCategorias(data))
     }, [])
@@ -27,7 +27,7 @@ export default function Nova() {
             return
         }
 
-        const resposta = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/Categorias`, {
+        const resposta = await fetch(`/api/Categorias`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',

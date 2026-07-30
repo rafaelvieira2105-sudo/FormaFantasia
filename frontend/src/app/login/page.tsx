@@ -18,7 +18,7 @@ export default function Login() {
 
   async function doLogin() {
     setErro('')
-    const resposta = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/Utilizadores/login-api`, {
+    const resposta = await fetch(`/api/Utilizadores/login-api`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
@@ -46,7 +46,7 @@ export default function Login() {
       return
     }
 
-    const resposta = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/Utilizadores/register-api`, {
+    const resposta = await fetch(`/api/Utilizadores/register-api`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
@@ -70,16 +70,17 @@ export default function Login() {
   return (
     <main className="login-page">
       <div className="auth-wrap">
+        <a href="/" className="btn-voltar">← Voltar ao site</a>
         <div className="tab-bar">
           <button
             className={modo === 'login' ? 'tab-btn active' : 'tab-btn'}
-            onClick={() => {setModo('login'); setErro('')}}
+            onClick={() => { setModo('login'); setErro('') }}
           >
             Entrar
           </button>
           <button
             className={modo === 'registo' ? 'tab-btn active' : 'tab-btn'}
-            onClick={() => {setModo('registo'); setErro('')}}
+            onClick={() => { setModo('registo'); setErro('') }}
           >
             Criar Conta
           </button>

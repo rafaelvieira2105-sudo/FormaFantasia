@@ -1,16 +1,40 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 export default function Header() {
+
+    const router = useRouter()
 
     const [categorias, setCategorias] = useState([])
 
     useEffect(() => {
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/Categorias`)
+        fetch(`/api/Categorias`)
             .then(res => res.json())
             .then(data => setCategorias(data))
     }, [])
+
+    const [perfil, setPerfil] = useState<any>(null)
+
+    useEffect(() => {
+        fetch('/api/Utilizadores/auth', { credentials: 'include' })
+            .then(res => res.json())
+            .then(data => {
+                if (data.isAuthenticated) {
+                    setPerfil(data)
+                } else {
+                    setPerfil(null)
+                }
+            })
+            .catch(() => setPerfil(null))
+    }, [])
+
+    async function doLogout() {
+        await fetch('/api/Utilizadores/logout-api', { method: 'POST', credentials: 'include' })
+        setPerfil(null)
+        router.push('/')
+    }
 
     return (
         <header>
@@ -20,7 +44,6 @@ export default function Header() {
             <div className="header-main">
                 <a href="/" className="logo">Forma<span>Fantasia</span></a>
                 <nav aria-label="Navegação principal">
-
                     {categorias
                         .filter((cat: any) => !cat.categoriaPaiId)
                         .map((cat: any) => (
@@ -51,12 +74,33 @@ export default function Header() {
                         </svg>
                         <span className="badge" style={{ display: 'none' }}>0</span>
                     </button>
-                    <a href="/login" className="icon-btn" aria-label="Conta" title="A minha conta" style={{ textDecoration: 'none' }}>
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
-                            <circle cx="12" cy="8" r="4" />
-                            <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
-                        </svg>
-                    </a>
+                    {perfil ? (
+                        <div className="user-dropdown-wrap">
+                            <button className="icon-btn" aria-label="Conta">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+                                    <circle cx="12" cy="8" r="4" />
+                                    <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
+                                </svg>
+                            </button>
+                            <div className="user-dropdown">
+                                {perfil.role === 'Admin' ? (
+                                    <a href="/admin" style={{ display: 'block', padding: '.5rem .75rem', fontSize: '13px', color: 'var(--navy)', fontWeight: 500 }}>⚙️ Admin</a>
+                                ) : (
+                                    <a href="/conta" style={{ display: 'block', padding: '.5rem .75rem', fontSize: '13px', color: 'var(--navy)', fontWeight: 500 }}>👤 Perfil</a>
+                                )}
+                                <button onClick={doLogout} style={{ display: 'block', width: '100%', textAlign: 'left', padding: '.5rem .75rem', fontSize: '13px', color: '#c0392b', fontWeight: 500, background: 'none', border: 'none', cursor: 'pointer' }}>
+                                    Terminar Sessão
+                                </button>
+                            </div>
+                        </div>
+                    ) : (
+                        <a href="/login" className="icon-btn" style={{ textDecoration: 'none' }}>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+                                <circle cx="12" cy="8" r="4" />
+                                <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
+                            </svg>
+                        </a>
+                    )}
                 </div>
             </div>
         </header>

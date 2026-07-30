@@ -8,7 +8,7 @@ export default function Destaque() {
     const [destaque, setDestaque] = useState(null)
 
     useEffect(() => {
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/Produtos?tag=destaque`)
+        fetch(`/api/Produtos?tag=destaque`)
             .then(res => res.json())
             .then(data => setDestaque(data))
     }, [])
@@ -16,7 +16,7 @@ export default function Destaque() {
     const [stockoff, setStockoff] = useState([])
 
     useEffect(() => {
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/Produtos?tag=stockoff`)
+        fetch(`/api/Produtos?tag=stockoff`)
             .then(res => res.json())
             .then(data => setStockoff(data))
     }, [])
@@ -24,7 +24,7 @@ export default function Destaque() {
     const [promo, setPromo] = useState([])
 
     useEffect(() => {
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/Produtos?tag=promo`)
+        fetch(`/api/Produtos?tag=promo`)
             .then(res => res.json())
             .then(data => setPromo(data))
     }, [])
@@ -32,7 +32,7 @@ export default function Destaque() {
     const [emDestaque, setEmDestaque] = useState(null)
 
     useEffect(() => {
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/Categorias/destaque`)
+        fetch(`/api/Categorias/destaque`)
             .then(res => res.json())
             .then(data => setEmDestaque(data))
     }, [])

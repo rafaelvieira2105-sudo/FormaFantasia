@@ -906,6 +906,26 @@ footer {
   max-width: 420px;
 }
 
+.btn-voltar {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  color: var(--white);
+  font-size: 13px;
+  font-weight: 600;
+  padding: .6rem 1.25rem;
+  border-radius: 8px;
+  background: var(--navy);
+  transition: all .2s;
+  margin-bottom: 1.5rem;
+  letter-spacing: .02em;
+}
+
+.btn-voltar:hover {
+  background: var(--navy-mid);
+  transform: translateX(-2px);
+}
+
 .tab-bar {
   display: flex;
   background: var(--cream-dark);
@@ -1263,4 +1283,29 @@ footer {
 
 .btn-guardar:hover {
   background: var(--green-cta-hover);
+}
+
+.user-dropdown-wrap {
+  position: relative;
+}
+
+.user-dropdown {
+  position: absolute;
+  right: 0;
+  top: 110%;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: .5rem;
+  min-width: 160px;
+  z-index: 200;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, .1);
+  opacity: 0;
+  visibility: hidden;
+  transition: all .2s;
+}
+
+.user-dropdown-wrap:hover .user-dropdown {
+  opacity: 1;
+  visibility: visible;
 }

@@ -8,7 +8,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     const router = useRouter()
 
     useEffect(() => {
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/Utilizadores/auth`, {
+        fetch(`/api/Utilizadores/auth`, {
             credentials: 'include'
         })
             .then(res => res.json())
@@ -19,8 +19,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             })
     }, [])
 
-    function doLogout() {
-        router.push('/login')
+    async function doLogout() {
+        await fetch('/api/Utilizadores/logout-api', { method: 'POST', credentials: 'include' })
+        router.push('/')
     }
 
     return (
@@ -30,7 +31,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                     Forma<span>Fantasia</span> <small>ADMIN</small>
                 </div>
                 <div className="admin-topbar-right">
-                    <a href="/" className="admin-topbar-btn">← Ver Site</a>
+                    <a href="/" className="admin-topbar-btn" target="_blank">← Ver Site</a>
                     <button className="admin-topbar-btn" onClick={doLogout}>Terminar Sessão</button>
                 </div>
             </div>

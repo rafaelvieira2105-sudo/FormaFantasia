@@ -12,23 +12,23 @@ export default function Admin() {
     const [encomendas, setEncomendas] = useState([])
 
     useEffect(() => {
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/Produtos`, { credentials: 'include' })
+        fetch(`/api/Produtos`, { credentials: 'include' })
             .then(res => res.json())
             .then(data => setTotalProdutos(data.length))
 
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/Categorias`, { credentials: 'include' })
+        fetch(`/api/Categorias`, { credentials: 'include' })
             .then(res => res.json())
             .then(data => setTotalCategorias(data.length))
 
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/Encomendas`, { credentials: 'include' })
+        fetch(`/api/Encomendas`, { credentials: 'include' })
             .then(res => res.json())
             .then(data => setTotalEncomendas(data.length))
 
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/Utilizadores`, { credentials: 'include' })
+        fetch(`/api/Utilizadores`, { credentials: 'include' })
             .then(res => res.json())
             .then(data => setTotalUtilizadores(data.length))
 
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/Encomendas`, { credentials: 'include' })
+        fetch(`/api/Encomendas`, { credentials: 'include' })
             .then(res => res.json())
             .then(data => setEncomendas(data))
     }, [])

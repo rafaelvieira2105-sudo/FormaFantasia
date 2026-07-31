@@ -18,17 +18,23 @@ public class UtilizadoresController : ControllerBase
     // Ligar se admin
     [HttpGet]
     [Authorize(Roles = "Admin")]
-    public IActionResult Get()
+    public async Task<IActionResult> Get()
     {
-        var utilizadores = _userManager.Users.Select(u => new
+        var utilizadores = new List<object>();
+        foreach (var u in _userManager.Users.ToList())
         {
-            u.Id,
-            u.Email,
-            u.Nome,
-            u.Apelido,
-            u.Morada,
-            u.NIF
-        }).ToList();
+            var roles = await _userManager.GetRolesAsync(u);
+            utilizadores.Add(new
+            {
+                u.Id,
+                u.Email,
+                u.Nome,
+                u.Apelido,
+                u.Morada,
+                u.NIF,
+                role = roles.FirstOrDefault() ?? "Cliente"
+            });
+        }
         return Ok(utilizadores);
     }
     // Obter dados de utilizador com ID

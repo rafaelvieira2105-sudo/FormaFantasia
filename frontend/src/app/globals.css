@@ -1381,3 +1381,73 @@ footer {
   color: var(--text-secondary);
   line-height: 1.8;
 }
+
+.produto-preco {
+  display: flex;
+  align-items: baseline;
+  gap: .5rem;
+  margin: 1rem 0;
+}
+
+.preco-valor {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 36px;
+  font-weight: 600;
+  color: var(--navy);
+}
+
+.preco-iva {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.produto-quantidade {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1.5rem 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: .5rem 1rem;
+  width: fit-content;
+}
+
+.produto-quantidade button {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: var(--navy);
+  font-weight: 600;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.produto-quantidade span {
+  font-size: 16px;
+  font-weight: 600;
+  min-width: 24px;
+  text-align: center;
+}
+
+.produto-tabs {
+  border-top: 1px solid var(--border);
+  padding-top: 2rem;
+  margin-top: 2rem;
+}
+
+.produto-tabs-header {
+  display: flex;
+  gap: .5rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.produto-tab-content {
+  font-size: 15px;
+  color: var(--text-secondary);
+  line-height: 1.8;
+}

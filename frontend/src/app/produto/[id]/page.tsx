@@ -1,12 +1,14 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useCart } from '@/context/CartContext'
 
 export default function Produto({ params }: { params: { id: string } }) {
 
     const [produto, setProduto] = useState<any>(null)
     const [quantidade, setQuantidade] = useState(1)
     const [tabActiva, setTabActiva] = useState('descricao')
+    const {adicionarItem, abrirCarrinho} = useCart()
 
     useEffect(() => {
         fetch(`/api/Produtos/${params.id}`)
@@ -40,7 +42,16 @@ export default function Produto({ params }: { params: { id: string } }) {
                             <span>{quantidade}</span>
                             <button onClick={() => setQuantidade(quantidade + 1)}>+</button>
                         </div>
-                        <button className="btn-auth" onClick={() => { }}>
+                        <button className="btn-auth" onClick={() => {
+                            adicionarItem({
+                                id: produto.id,
+                                nome: produto.nome,
+                                preco: produto.preco,
+                                quantidade: quantidade,
+                                fotoUrl: produto.fotoUrl
+                            })
+                            abrirCarrinho()
+                        }}>
                             Adicionar ao Carrinho
                         </button>
                     </div>

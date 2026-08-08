@@ -54,18 +54,20 @@ export default function CategoriasDestaque() {
             </div>
             <div className="products-grid">
                 {produtosFiltrados.map((p: any) => (
-                    <div key={p.id} className="product-card">
-                        <div className="product-card-img">
-                        </div>
-                        <div className="product-card-body">
-                            <div className="product-card-category">{p.categoria?.nome}</div>
-                            <div className="product-card-name">{p.nome}</div>
-                            <div className="product-card-ref">Ref. {p.referencia || 'N/A'}</div>
-                            <div className="product-card-footer">
-                                <div className="product-card-price">{p.preco} €</div>
+                    <a key={p.id} href={`/produto/${p.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                        <div key={p.id} className="product-card">
+                            <div className="product-card-img">
+                            </div>
+                            <div className="product-card-body">
+                                <div className="product-card-category">{p.categoria?.nome}</div>
+                                <div className="product-card-name">{p.nome}</div>
+                                <div className="product-card-ref">Ref. {p.referencia || 'N/A'}</div>
+                                <div className="product-card-footer">
+                                    <div className="product-card-price">{p.preco} €</div>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 ))}
             </div>
         </section>

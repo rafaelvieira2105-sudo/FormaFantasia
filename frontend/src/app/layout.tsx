@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
 import Header from '@/components/Header'
+import { CartProvider } from '@/context/CartContext'
+import CartDrawer from '@/components/CartDrawer'
 
 
 export const metadata: Metadata = {
@@ -30,8 +32,11 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${cormorant.variable} antialiased`}
       >
-        <Header />
-        {children}
+        <CartProvider>
+          <Header />
+          <CartDrawer />
+          {children}
+        </CartProvider>
       </body>
     </html>
   );

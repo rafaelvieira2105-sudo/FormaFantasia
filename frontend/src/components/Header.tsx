@@ -2,12 +2,14 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { useCart } from '@/context/CartContext'
 
 export default function Header() {
 
     const router = useRouter()
 
     const [categorias, setCategorias] = useState([])
+    const { itens, abrirCarrinho } = useCart()
 
     useEffect(() => {
         fetch(`/api/Categorias`)
@@ -66,13 +68,13 @@ export default function Header() {
                         </svg>
                         <span className="badge" style={{ display: 'none' }}>0</span>
                     </button>
-                    <button className="icon-btn" aria-label="Carrinho de compras" title="Carrinho">
+                    <button className="icon-btn" aria-label="Carrinho de compras" title="Carrinho" onClick={abrirCarrinho}>
                         <svg viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
                             <line x1="3" y1="6" x2="21" y2="6" />
                             <path strokeLinecap="round" strokeLinejoin="round" d="M16 10a4 4 0 01-8 0" />
                         </svg>
-                        <span className="badge" style={{ display: 'none' }}>0</span>
+                        <span className="badge" style={{ display: itens.length > 0 ? 'flex' : 'none' }}>{itens.length}</span>
                     </button>
                     {perfil ? (
                         <div className="user-dropdown-wrap">

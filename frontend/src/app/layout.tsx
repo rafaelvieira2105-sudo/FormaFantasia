@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from '@/components/Header'
 import { CartProvider } from '@/context/CartContext'
 import CartDrawer from '@/components/CartDrawer'
+import ConditionalHeader from '@/components/ConditionalHeader'
 
 
 export const metadata: Metadata = {
@@ -33,7 +34,7 @@ export default function RootLayout({
         className={`${inter.variable} ${cormorant.variable} antialiased`}
       >
         <CartProvider>
-          <Header />
+          <ConditionalHeader />
           <CartDrawer />
           {children}
         </CartProvider>

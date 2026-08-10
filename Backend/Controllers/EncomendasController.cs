@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using FormaFantasia.Web.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using FormaFantasia.Web.Models;
 
 namespace FormaFantasia.Web.Controllers;
 
@@ -94,9 +95,74 @@ public class EncomendasController : ControllerBase
         await _context.SaveChangesAsync();
         return NoContent();
     }
+
+    // POST /api/Encomendas — criar encomenda
+    [HttpPost]
+    [Authorize]
+    public async Task<IActionResult> Create([FromBody] EncomendaDto dto)
+    {
+        var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+        if (userId == null) return Unauthorized();
+
+        var encomenda = new Encomenda
+        {
+            Data = DateTime.UtcNow,
+            Estado = "pendente",
+            UtilizadorId = userId,
+            NomeCliente = dto.NomeCliente,
+            EmailCliente = dto.EmailCliente,
+            Telefone = dto.Telefone,
+            MoradaEntrega = dto.MoradaEntrega,
+            Localidade = dto.Localidade,
+            CodigoPostal = dto.CodigoPostal,
+            Pais = dto.Pais,
+            Notas = dto.Notas,
+            Total = dto.Total
+        };
+
+        foreach (var item in dto.Itens)
+        {
+            encomenda.ItensEncomenda.Add(new ItemEncomenda
+            {
+                ProdutoId = item.ProdutoId,
+                Quantidade = item.Quantidade,
+                PrecoUnitario = item.PrecoUnitario
+            });
+
+            // Reduzir stock
+            var produto = await _context.Produtos.FindAsync(item.ProdutoId);
+            if (produto != null)
+                produto.Stock -= item.Quantidade;
+        }
+
+        _context.Encomendas.Add(encomenda);
+        await _context.SaveChangesAsync();
+        return CreatedAtAction(nameof(Get), new { id = encomenda.Id }, encomenda);
+    }
 }
 
 public class EstadoDto
 {
     public string Estado { get; set; } = string.Empty;
+}
+
+public class EncomendaDto
+{
+    public string NomeCliente { get; set; } = string.Empty;
+    public string EmailCliente { get; set; } = string.Empty;
+    public string Telefone { get; set; } = string.Empty;
+    public string MoradaEntrega { get; set; } = string.Empty;
+    public string Localidade { get; set; } = string.Empty;
+    public string CodigoPostal { get; set; } = string.Empty;
+    public string Pais { get; set; } = string.Empty;
+    public string? Notas { get; set; }
+    public decimal Total { get; set; }
+    public List<ItemEncomendaDto> Itens { get; set; } = new();
+}
+
+public class ItemEncomendaDto
+{
+    public int ProdutoId { get; set; }
+    public int Quantidade { get; set; }
+    public decimal PrecoUnitario { get; set; }
 }

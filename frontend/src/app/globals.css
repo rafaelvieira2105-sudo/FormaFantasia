@@ -1559,3 +1559,188 @@ footer {
   color: var(--navy);
   margin-bottom: 1rem;
 }
+
+/* ── CHECKOUT ── */
+.checkout-container {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.checkout-form {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2rem;
+}
+
+.checkout-form h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--navy);
+  margin-bottom: 1.5rem;
+}
+
+.checkout-resumo {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  height: fit-content;
+  position: sticky;
+  top: 100px;
+}
+
+.checkout-resumo h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--navy);
+  margin-bottom: 1.25rem;
+}
+
+.resumo-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: .625rem 0;
+  border-bottom: 1px solid var(--border-light);
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.resumo-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--navy);
+  margin-top: .5rem;
+}
+
+.pagamento-opcoes {
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+  margin-bottom: 1.5rem;
+}
+
+.pagamento-opcao {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  padding: .875rem 1rem;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all .2s;
+}
+
+.pagamento-opcao:has(input:checked) {
+  border-color: var(--green-cta);
+  background: var(--gold-pale);
+}
+
+.pagamento-opcao input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--green-cta);
+}
+
+.pagamento-opcao label {
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  color: var(--text-primary);
+}
+
+.checkout-termos {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  margin: 1.5rem 0;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.checkout-termos input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--green-cta);
+}
+
+.pagamento-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all .2s;
+  position: relative;
+}
+
+.pagamento-card:hover {
+  border-color: var(--gold);
+}
+
+.pagamento-card-ativo {
+  border-color: var(--green-cta);
+  background: var(--gold-pale);
+}
+
+.pagamento-card span {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+  flex: 1;
+}
+
+.pagamento-check {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  transition: all .2s;
+}
+
+.pagamento-check.ativo {
+  border-color: var(--green-cta);
+  background: var(--green-cta);
+  box-shadow: inset 0 0 0 3px var(--white);
+}
+
+/* ── CONFIRMAÇÃO ── */
+.delivery-confirmation {
+  max-width: 600px;
+  margin: 4rem auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.delivery-confirmation h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 36px;
+  font-weight: 600;
+  color: var(--navy);
+  margin-bottom: 1rem;
+}
+
+.delivery-confirmation p {
+  font-size: 15px;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+  line-height: 1.7;
+}
+
+.delivery-confirmation a {
+  display: inline-block;
+  margin: .5rem;
+}

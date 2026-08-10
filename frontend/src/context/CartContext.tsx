@@ -17,15 +17,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     
     const [ aberto, setAberto] = useState(false)
 
-    const [itens, setItens] = useState<ItemCarrinho[]>(() => {
-        if (typeof window === 'undefined') return []
-        const guardado = localStorage.getItem('ff_carrinho')
-        return guardado ? JSON.parse(guardado): []
-    })
+    const [itens, setItens] = useState<ItemCarrinho[]>([])
 
     useEffect(() => {
-        localStorage.setItem('ff_carrinho', JSON.stringify(itens))
-    }, [itens])
+        const saved = localStorage.getItem('ff_cart')
+        if(saved) setItens(JSON.parse(saved))
+    }, [])
 
     const total = itens.reduce((acc, item) => acc + item.preco * item.quantidade, 0)
 

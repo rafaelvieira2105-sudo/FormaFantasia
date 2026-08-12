@@ -10,4 +10,5 @@ public class Utilizador : IdentityUser
     public string NIF { get; set; } = string.Empty;
     public string Nome { get; set; } = string.Empty;
     public string Apelido { get; set; } = string.Empty;
+    
 }

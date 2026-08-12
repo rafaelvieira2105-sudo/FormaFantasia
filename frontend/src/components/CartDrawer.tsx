@@ -36,9 +36,21 @@ export default function CartDrawer() {
                         <span>Total</span>
                         <span>{total.toFixed(2)} €</span>
                     </div>
-                    <a href="/checkout" className="btn-auth" style={{ textAlign: 'center', display: 'block' }}>
+                    <button className="btn-auth" onClick={async () => {
+                        const res = await fetch('/api/Utilizadores/auth', { credentials: 'include' })
+                        const auth = await res.json()
+                        if (auth.isAuthenticated) {
+                            window.location.href = '/checkout'
+                        } else {
+                            window.location.href = '/login?redirect=checkout'
+                        }
+                        if(itens.length==0){
+                            alert("Não tem Produtos no carrinho")
+                            return
+                        }
+                    }}>
                         Finalizar Compra
-                    </a>
+                    </button>
                 </div>
             </div>
         </div>

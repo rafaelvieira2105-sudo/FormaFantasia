@@ -82,18 +82,23 @@ export default function Cliente() {
 
             <div className="account-hero">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 00-4 4v2" />
+                    <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
                     <circle cx="12" cy="7" r="4" />
                 </svg>
-                <h1>{primeiroNome} {ultimoNome}</h1>
-                <button className="cliente-auth" onClick={doLogout}>Terminar Sessão</button>
+                <div>
+                    <h1>{primeiroNome} {ultimoNome}</h1>
+                    <p>{email}</p>
+                </div>
+                <div className="account-hero-actions">
+                    <button className="btn-guardar" onClick={doLogout}>Terminar Sessão</button>
+                </div>
             </div>
 
             <div className="account-body">
 
                 <aside className="account-sidebar">
                     <button
-                        className={tabAtiva === 'encomenda' ? 'account-sidebar-item active' : 'account-sidebar-item'}
+                        className={tabAtiva === 'encomendas' ? 'account-sidebar-item active' : 'account-sidebar-item'}
                         onClick={() => setTabAtiva('encomendas')}
                     >
                         Encomendas
@@ -106,115 +111,77 @@ export default function Cliente() {
                     </button>
                 </aside>
 
-                <main>
-                    <div className="account-body">
-                        {tabAtiva === 'informacao' ? (
-                            <div className="account-form">
-                                <div className="form-row">
-                                    <input
-                                        type="text"
-                                        value={primeiroNome}
-                                        onChange={(e) => setPrimeiroNome(e.target.value)}
-                                    />
-                                    <label>Primeiro Nome</label>
-                                </div>
-                                <div className="form-row">
-                                    <input
-                                        type="text"
-                                        value={ultimoNome}
-                                        onChange={(e) => setUltimoNome(e.target.value)}
-                                    />
-                                    <label>último Nome</label>
-                                </div>
-                                <div className="form-row">
-                                    <input
-                                        type="text"
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
-                                        readOnly
-                                    />
-                                    <label>Email</label>
-                                </div>
-                                <div className="form-row">
-                                    <input
-                                        type="text"
-                                        value={telemovel}
-                                        onChange={(e) => setTelemovel(e.target.value)}
-                                    />
-                                    <label>Telemóvel</label>
-                                </div>
-                                <div className="form-row">
-                                    <input
-                                        type="text"
-                                        value={nif}
-                                        onChange={(e) => setNif(e.target.value)}
-                                    />
-                                    <label>NIF</label>
-                                </div>
-                                <div className="form-row">
-                                    <input
-                                        type="text"
-                                        value={morada}
-                                        onChange={(e) => setMorada(e.target.value)}
-                                    />
-                                    <label>Morada</label>
-                                </div>
-                                <div className="form-row">
-                                    <input
-                                        type="text"
-                                        value={localidade}
-                                        onChange={(e) => setLocalidade(e.target.value)}
-                                    />
-                                    <label>Localidade</label>
-                                </div>
-                                <div className="form-row">
-                                    <input
-                                        type="text"
-                                        value={pais}
-                                        onChange={(e) => setPais(e.target.value)}
-                                    />
-                                    <label>País</label>
-                                </div>
-                                <div className="form-row">
-                                    <input
-                                        type="text"
-                                        value={codPostal}
-                                        onChange={(e) => setCodPostal(e.target.value)}
-                                    />
-                                    <label>Código Postal</label>
-                                </div>
-                                <button className="btn-auth" onClick={guardarDados}>
-                                    Guardar Alterações
-                                </button>
+                <main className="account-main">
+                    {tabAtiva === 'informacao' ? (
+                        <div className="account-form">
+                            <h2>Informação Pessoal</h2>
+                            <div className="form-group">
+                                <label>Primeiro Nome</label>
+                                <input type="text" value={primeiroNome} onChange={(e) => setPrimeiroNome(e.target.value)} />
                             </div>
-                        ) : (
-                            <div className="account-deliveries">
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>Nº</th>
-                                            <th>Data</th>
-                                            <th>Total</th>
-                                            <th>Estado</th>
-                                            <th>Ações</th>
+                            <div className="form-group">
+                                <label>Último Nome</label>
+                                <input type="text" value={ultimoNome} onChange={(e) => setUltimoNome(e.target.value)} />
+                            </div>
+                            <div className="form-group">
+                                <label>Email</label>
+                                <input type="text" value={email} readOnly onChange={(e) => setEmail(e.target.value)} />
+                            </div>
+                            <div className="form-group">
+                                <label>Telemóvel</label>
+                                <input type="text" value={telemovel} onChange={(e) => setTelemovel(e.target.value)} />
+                            </div>
+                            <div className="form-group">
+                                <label>NIF</label>
+                                <input type="text" value={nif} onChange={(e) => setNif(e.target.value)} />
+                            </div>
+                            <div className="form-group">
+                                <label>Morada</label>
+                                <input type="text" value={morada} onChange={(e) => setMorada(e.target.value)} />
+                            </div>
+                            <div className="form-group">
+                                <label>Localidade</label>
+                                <input type="text" value={localidade} onChange={(e) => setLocalidade(e.target.value)} />
+                            </div>
+                            <div className="form-group">
+                                <label>País</label>
+                                <input type="text" value={pais} onChange={(e) => setPais(e.target.value)} />
+                            </div>
+                            <div className="form-group">
+                                <label>Código Postal</label>
+                                <input type="text" value={codPostal} onChange={(e) => setCodPostal(e.target.value)} />
+                            </div>
+                            <button className="btn-auth" onClick={guardarDados}>Guardar Alterações</button>
+                        </div>
+                    ) : (
+                        <div className="account-deliveries">
+                            <h2>As minhas Encomendas</h2>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Nº</th>
+                                        <th>Data</th>
+                                        <th>Total</th>
+                                        <th>Estado</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {encomendas.map((e: any) => (
+                                        <tr key={e.id}>
+                                            <td>#{e.id}</td>
+                                            <td>{new Date(e.data).toLocaleDateString('pt-PT')}</td>
+                                            <td>{e.total} €</td>
+                                            <td>{e.estado}</td>
+                                            <td><a href={`/conta/encomendas/${e.id}`}>Ver</a></td>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        {encomendas.map((e:any) => (
-                                            <tr key={e.id}>
-                                                <td>#{e.id}</td>
-                                                <td>{new Date(e.data).toLocaleDateString('pt-PT')}</td>
-                                                <td>{e.total}</td>
-                                                <td>{e.estado}</td>
-                                                <td><a href={`/conta/encomendas/${e.id}`}>Ver</a></td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
-                            </div>
-                        )}
-                    </div>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    )}
                 </main>
+
             </div>
 
         </div>

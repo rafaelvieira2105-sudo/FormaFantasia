@@ -14,15 +14,21 @@ const CartContext = createContext<any>(null)
 
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
-    
-    const [ aberto, setAberto] = useState(false)
 
-    const [itens, setItens] = useState<ItemCarrinho[]>([])
+    const [aberto, setAberto] = useState(false)
+
+    const [itens, setItens] = useState<ItemCarrinho[]>(() => {
+        if (typeof window !== 'undefined') {
+            const saved = localStorage.getItem('ff_cart')
+            return saved ? JSON.parse(saved) : []
+        }
+        return []
+    })
+
 
     useEffect(() => {
-        const saved = localStorage.getItem('ff_cart')
-        if(saved) setItens(JSON.parse(saved))
-    }, [])
+        localStorage.setItem('ff_cart', JSON.stringify(itens))
+    }, [itens])
 
     const total = itens.reduce((acc, item) => acc + item.preco * item.quantidade, 0)
 

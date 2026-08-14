@@ -2023,3 +2023,33 @@ footer {
 .prose a:hover {
   color: var(--green-cta);
 }
+
+/* ── WISHLIST ── */
+.product-card-img {
+  position: relative;
+}
+
+.product-card-img .icon-btn {
+  position: absolute;
+  top: .5rem;
+  right: .5rem;
+  background: var(--white);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .1);
+  opacity: 0;
+  transition: opacity .2s;
+}
+
+.product-card:hover .icon-btn {
+  opacity: 1;
+}
+
+.product-card-img .icon-btn svg {
+  width: 16px;
+  height: 16px;
+}

@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useCart } from '@/context/CartContext'
+import { useWishList } from '@/context/WishListContext'
 
 export default function Header() {
 
@@ -10,6 +11,7 @@ export default function Header() {
 
     const [categorias, setCategorias] = useState([])
     const { itens, abrirCarrinho } = useCart()
+    const { itensWishlist, abrirWishList } = useWishList()
 
     useEffect(() => {
         fetch(`/api/Categorias`)
@@ -62,7 +64,7 @@ export default function Header() {
                             </svg>
                         </button>
                     </div>
-                    <button className="icon-btn" aria-label="Lista de desejos" title="Lista de desejos">
+                    <button className="icon-btn" onClick={abrirWishList} aria-label="Lista de desejos" title="Lista de desejos">
                         <svg viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
                         </svg>

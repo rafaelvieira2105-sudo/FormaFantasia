@@ -5,6 +5,8 @@ import Header from '@/components/Header'
 import { CartProvider } from '@/context/CartContext'
 import CartDrawer from '@/components/CartDrawer'
 import ConditionalHeader from '@/components/ConditionalHeader'
+import { WishListProvider } from '@/context/WishListContext'
+import WishlistDrawer from '@/components/WishlistDrawer'
 
 
 export const metadata: Metadata = {
@@ -34,9 +36,12 @@ export default function RootLayout({
         className={`${inter.variable} ${cormorant.variable} antialiased`}
       >
         <CartProvider>
-          <ConditionalHeader />
-          <CartDrawer />
-          {children}
+          <WishListProvider>
+            <ConditionalHeader />
+            <CartDrawer />
+            <WishlistDrawer />
+            {children}
+          </WishListProvider>
         </CartProvider>
       </body>
     </html>

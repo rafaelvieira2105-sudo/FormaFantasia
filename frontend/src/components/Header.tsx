@@ -12,6 +12,7 @@ export default function Header() {
     const [categorias, setCategorias] = useState([])
     const { itens, abrirCarrinho } = useCart()
     const { itensWishlist, abrirWishList } = useWishList()
+    const [pesquisa, setPesquisa] = useState('')
 
     useEffect(() => {
         fetch(`/api/Categorias`)
@@ -40,6 +41,12 @@ export default function Header() {
         router.push('/')
     }
 
+    function doPesquisa(){
+        if(pesquisa.trim()){
+            router.push(`/pesquisa?q=${encodeURIComponent(pesquisa)}`)
+        }
+    }
+
     return (
         <header>
             <div className="header-top">
@@ -56,8 +63,8 @@ export default function Header() {
                 </nav>
                 <div className="header-actions">
                     <div className="search-wrapper">
-                        <input type="search" placeholder="Buscar..." autoComplete="off" />
-                        <button aria-label="Pesquisar">
+                        <input type="search" placeholder="Buscar..." autoComplete="off" value={pesquisa} onChange={(e) => setPesquisa(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && doPesquisa()}/>
+                        <button aria-label="Pesquisar" onClick={doPesquisa}>
                             <svg viewBox="0 0 24 24" style={{ width: '16px', height: '16px', stroke: 'currentColor', fill: 'none', strokeWidth: 2 }}>
                                 <circle cx="11" cy="11" r="8" />
                                 <path strokeLinecap="round" d="m21 21-4.35-4.35" />

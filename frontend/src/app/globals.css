@@ -2053,3 +2053,149 @@ footer {
   width: 16px;
   height: 16px;
 }
+
+/* ── MOBILE ── */
+@media (max-width: 768px) {
+
+  .header-main {
+    flex-wrap: wrap;
+    padding: .75rem 1rem;
+  }
+
+  .header-actions {
+    order: 2;
+  }
+
+  .search-wrapper {
+    order: 3;
+    width: 100%;
+    flex: 1 1 100%;
+  }
+
+  .search-wrapper input {
+    width: 100%;
+  }
+
+  nav[aria-label="Navegação principal"] {
+    display: none;
+  }
+
+  .header-top {
+    font-size: 10px;
+    padding: 5px .75rem;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: auto;
+    padding: 2rem 1rem;
+  }
+
+  .hero-inner {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .hero-visual {
+    display: none;
+  }
+
+  .hero-title {
+    font-size: 36px;
+  }
+
+  /* DESTAQUES */
+  .highlights-strip .highlights-inner {
+    flex-direction: column;
+  }
+
+  .highlight-card {
+    width: 100%;
+  }
+
+  /* VALORES */
+  .values-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* NEWSLETTER */
+  .promo-banner {
+    padding: 2rem 1rem;
+  }
+
+  .newsletter-form {
+    flex-direction: column;
+  }
+
+  .newsletter-form input {
+    width: 100%;
+  }
+
+  .newsletter-form button {
+    width: 100%;
+  }
+
+  /* FOOTER */
+  .footer-main {
+    grid-template-columns: 1fr 1fr;
+    padding: 2rem 1rem;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    text-align: center;
+    gap: .75rem;
+  }
+
+  /* GERAL */
+  .container {
+    padding: 0 1rem;
+  }
+
+  .section {
+    padding: 2rem 1rem;
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  /* CHECKOUT */
+  .checkout-container {
+    grid-template-columns: 1fr;
+  }
+
+  /* PRODUTO */
+  .produto-top {
+    grid-template-columns: 1fr;
+  }
+
+  /* CONTA */
+  .account-body {
+    grid-template-columns: 1fr;
+  }
+
+  .account-sidebar {
+    position: static;
+  }
+
+  /* DESTAQUES */
+  .highlights-strip {
+    padding: 1.5rem 1rem;
+  }
+
+  .highlights-inner {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .highlight-card {
+    width: 100%;
+    min-height: auto;
+  }
+
+  .highlight-visual {
+    height: 150px;
+  }
+}

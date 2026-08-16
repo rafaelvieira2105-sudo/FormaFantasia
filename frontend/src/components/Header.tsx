@@ -53,7 +53,9 @@ export default function Header() {
                 Envios Internacionais Disponíveis - <a href="/condicoes">Saiba mais</a>
             </div>
             <div className="header-main">
-                <a href="/" className="logo">Forma<span>Fantasia</span></a>
+                 <a href="/" >
+                    <img src="/logo.png" alt = "FormaFantasia" style = {{ height: '40px', objectFit: 'contain' }} />
+                 </a>
                 <nav aria-label="Navegação principal">
                     {categorias
                         .filter((cat: any) => !cat.categoriaPaiId)
@@ -75,7 +77,9 @@ export default function Header() {
                         <svg viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
                         </svg>
-                        <span className="badge" style={{ display: 'none' }}>0</span>
+                         < span className = "badge" style = {{ display: itensWishlist.length > 0 ? 'flex' : 'none' }}>
+                            { itensWishlist.length }
+                         </span>
                     </button>
                     <button className="icon-btn" aria-label="Carrinho de compras" title="Carrinho" onClick={abrirCarrinho}>
                         <svg viewBox="0 0 24 24">

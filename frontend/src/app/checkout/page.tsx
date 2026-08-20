@@ -18,6 +18,7 @@ export default function Checkout() {
     const [pagamento, setPagamento] = useState('')
     const [notas, setNotas] = useState('')
     const [termos, setTermos] = useState(false)
+    const [transportadora, setTransportadora] = useState('')
 
     const { itens, total, limparCarrinho } = useCart()
 
@@ -81,6 +82,11 @@ export default function Checkout() {
         if (resposta.ok) {
             limparCarrinho()
             router.push('/checkout/confirmacao')
+        }
+
+        if (!transportadora) {
+            alert('Selecciona uma transportadora!')
+            return
         }
     }
 
@@ -185,6 +191,36 @@ export default function Checkout() {
                             <img src={metodo.img} alt={metodo.label} style={{ height: '32px', objectFit: 'contain' }} />
                             <span>{metodo.label}</span>
                             <div className={`pagamento-check ${pagamento === metodo.value ? 'ativo' : ''}`} />
+                        </label>
+                    ))}
+                </div>
+                <div className="pagamento-opcoes">
+                    <h3 style={{ marginBottom: '1rem', fontFamily: 'Cormorant Garamond, serif', fontSize: '20px', fontWeight: 600, color: 'var(--navy)' }}>
+                        Transportadora
+                    </h3>
+                    {[
+                        { value: 'ctt', label: 'CTT Expresso', preco: '4,99 €', prazo: '3-5 dias úteis' },
+                        { value: 'envialia', label: 'Envialia', preco: '6,99 €', prazo: '1-3 dias úteis' },
+                    ].map((t) => (
+                        <label
+                            key={t.value}
+                            className={`pagamento-card ${transportadora === t.value ? 'pagamento-card-ativo' : ''}`}
+                            onClick={() => setTransportadora(t.value)}
+                        >
+                            <input
+                                type="radio"
+                                name="transportadora"
+                                value={t.value}
+                                checked={transportadora === t.value}
+                                onChange={(e) => setTransportadora(e.target.value)}
+                                style={{ display: 'none' }}
+                            />
+                            <div style={{ flex: 1 }}>
+                                <span style={{ fontWeight: 600, fontSize: '14px' }}>{t.label}</span>
+                                <span style={{ display: 'block', fontSize: '12px', color: 'var(--text-muted)' }}>{t.prazo}</span>
+                            </div>
+                            <span style={{ fontWeight: 600, color: 'var(--navy)' }}>{t.preco}</span>
+                            <div className={`pagamento-check ${transportadora === t.value ? 'ativo' : ''}`} />
                         </label>
                     ))}
                 </div>

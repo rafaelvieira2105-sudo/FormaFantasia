@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useCart } from '@/context/CartContext'
 import { useWishList } from '@/context/WishListContext'
+import { useRouter } from 'next/navigation'
 
 export default function Produto({ params }: { params: { id: string } }) {
 
@@ -11,13 +12,62 @@ export default function Produto({ params }: { params: { id: string } }) {
     const [tabActiva, setTabActiva] = useState('descricao')
     const { adicionarItem, abrirCarrinho } = useCart()
     const { toggleItem, itens: itensWishlist } = useWishList()
-
+    const [avaliacoes, setAvaliacoes] = useState([])
+    const [estrelas, setEstrelas] = useState(0)
+    const [comentario, setComentario] = useState('')
+    const router = useRouter()
 
     useEffect(() => {
         fetch(`/api/Produtos/${params.id}`)
             .then(res => res.json())
             .then(data => setProduto(data))
     }, [])
+
+    useEffect(() => {
+        if (produto?.id) {
+            fetch(`/api/Avaliacoes?produtoId=${produto.id}`)
+                .then(res => res.json())
+                .then(data => setAvaliacoes(data))
+        }
+    }, [produto])
+
+    async function submeterAvaliacao() {
+
+        const res = await fetch('/api/Utilizadores/auth', { credentials: 'include' })
+        const auth = await res.json()
+
+        if (!auth.isAuthenticated) {
+            router.push('/login')
+            return
+        }
+
+        if (estrelas === 0) {
+            alert('Selecciona o número de estrelas.')
+            return
+        }
+
+        const resposta = await fetch('/api/Avaliacoes', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify({
+                ProdutoId: produto.id,
+                Estrelas: estrelas,
+                Comentario: comentario
+            })
+        })
+
+        if (resposta.ok) {
+            setComentario('')
+            setEstrelas(0)
+            // Recarregar avaliações
+            fetch(`/api/Avaliacoes?produtoId=${produto.id}`)
+                .then(res => res.json())
+                .then(data => setAvaliacoes(data))
+        } else {
+            alert('Tens de estar autenticado para deixar uma avaliação.')
+        }
+    }
 
     return (
         <main>
@@ -100,7 +150,57 @@ export default function Produto({ params }: { params: { id: string } }) {
                     <div className="produto-tab-content">
                         {tabActiva === 'descricao' && <p>{produto?.descricao}</p>}
                         {tabActiva === 'dados' && <p>Dados técnicos do produto.</p>}
-                        {tabActiva === 'avaliacoes' && <p>Ainda não há avaliações.</p>}
+                        {tabActiva === 'avaliacoes' && (
+                            <div className="avaliacoes">
+
+                                {/* Lista de avaliações */}
+                                {avaliacoes.length === 0 ? (
+                                    <p style={{ color: 'var(--text-muted)', marginBottom: '2rem' }}>Ainda não há avaliações.</p>
+                                ) : (
+                                    avaliacoes.map((a: any) => (
+                                        <div key={a.id} className="avaliacao-item">
+                                            <div className="avaliacao-header">
+                                                <span className="avaliacao-autor">{a.utilizador?.nome} {a.utilizador?.apelido}</span>
+                                                <span className="avaliacao-data">{new Date(a.data).toLocaleDateString('pt-PT')}</span>
+                                            </div>
+                                            <div className="avaliacao-estrelas">
+                                                {'★'.repeat(a.estrelas)}{'☆'.repeat(5 - a.estrelas)}
+                                            </div>
+                                            {a.comentario && <p className="avaliacao-comentario">{a.comentario}</p>}
+                                        </div>
+                                    ))
+                                )}
+
+                                {/* Formulário para deixar avaliação */}
+                                <div className="avaliacao-form">
+                                    <h3>Deixar uma avaliação</h3>
+                                    <div className="avaliacao-estrelas-input">
+                                        {[1, 2, 3, 4, 5].map(n => (
+                                            <span
+                                                key={n}
+                                                onClick={() => setEstrelas(n)}
+                                                style={{ cursor: 'pointer', fontSize: '24px', color: n <= estrelas ? 'var(--gold)' : 'var(--border)' }}
+                                            >
+                                                ★
+                                            </span>
+                                        ))}
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Comentário (opcional)</label>
+                                        <textarea
+                                            value={comentario}
+                                            onChange={(e) => setComentario(e.target.value)}
+                                            rows={4}
+                                            style={{ width: '100%', padding: '.75rem', border: '1px solid var(--border)', borderRadius: '8px', fontFamily: 'inherit', resize: 'vertical' }}
+                                        />
+                                    </div>
+                                    <button className="btn-auth" onClick={submeterAvaliacao}>
+                                        Submeter Avaliação
+                                    </button>
+                                </div>
+
+                            </div>
+                        )}
                     </div>
                 </div>
 

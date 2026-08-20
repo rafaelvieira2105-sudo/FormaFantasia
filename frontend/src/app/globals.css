@@ -2331,3 +2331,67 @@ footer {
     padding: 1.25rem;
   }
 }
+
+/* ── AVALIAÇÕES ── */
+.avaliacoes {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.avaliacao-item {
+  padding: 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--white);
+}
+
+.avaliacao-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: .5rem;
+}
+
+.avaliacao-autor {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--navy);
+}
+
+.avaliacao-data {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.avaliacao-estrelas {
+  color: var(--gold);
+  font-size: 18px;
+  margin-bottom: .5rem;
+}
+
+.avaliacao-comentario {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.avaliacao-form {
+  border-top: 1px solid var(--border);
+  padding-top: 1.5rem;
+  margin-top: 1rem;
+}
+
+.avaliacao-form h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--navy);
+  margin-bottom: 1rem;
+}
+
+.avaliacao-estrelas-input {
+  display: flex;
+  gap: .25rem;
+  margin-bottom: 1rem;
+}

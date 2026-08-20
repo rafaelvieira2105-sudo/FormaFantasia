@@ -1,11 +1,18 @@
 'use client'
 
 import { useWishList } from '@/context/WishListContext'
+import { useState, useEffect } from 'react'
 
 export default function WishlistDrawer() {
-    const { itens, removerItem, aberto, fecharWishList } = useWishList()
 
-    if (!aberto) return null
+    const { itens, removerItem, aberto, fecharWishList } = useWishList()
+    const [montado, setMontado] = useState(false)
+
+    useEffect(() => {
+        setMontado(true)
+    },[])
+
+    if (!montado || !aberto) return null
 
     return (
         <div className="cart-overlay" onClick={fecharWishList}>

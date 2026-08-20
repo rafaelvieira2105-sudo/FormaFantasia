@@ -2395,3 +2395,92 @@ footer {
   gap: .25rem;
   margin-bottom: 1rem;
 }
+
+/* ── CALCULADORA DE ROLOS ── */
+.calculadora-rolos {
+  margin-top: 1.5rem;
+  padding: 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--cream);
+}
+
+.calculadora-rolos h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--navy);
+  margin-bottom: 1rem;
+}
+
+.calculadora-rolos .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.resultado-rolos {
+  margin-top: 1rem;
+  font-size: 15px;
+  color: var(--text-primary);
+  background: var(--gold-pale);
+  padding: .75rem 1rem;
+  border-radius: 8px;
+}
+
+.resultado-rolos strong {
+  color: var(--green-cta);
+  font-weight: 600;
+}
+
+/* ── NAV DROPDOWN ── */
+.nav-item {
+  position: relative;
+}
+
+.nav-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .1);
+  min-width: 200px;
+  padding: .5rem 0;
+  z-index: 200;
+  opacity: 0;
+  visibility: hidden;
+  transition: all .2s;
+}
+
+.nav-item:hover .nav-dropdown {
+  opacity: 1;
+  visibility: visible;
+}
+
+.nav-dropdown a {
+  display: block;
+  padding: .5rem 1rem;
+  font-size: 13px;
+  color: var(--text-primary);
+  transition: all .2s;
+}
+
+.nav-dropdown a:hover {
+  background: var(--cream);
+  color: var(--gold);
+}
+
+nav[aria-label="Navegação principal"] {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.nav-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+}

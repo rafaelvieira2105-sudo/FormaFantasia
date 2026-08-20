@@ -13,6 +13,11 @@ export default function Header() {
     const { itens, abrirCarrinho } = useCart()
     const { itens : itensWishlist, abrirWishList } = useWishList()
     const [pesquisa, setPesquisa] = useState('')
+    const [montado, setMontado] = useState(false)
+
+    useEffect(() => {
+        setMontado(true)
+    },[])
 
     useEffect(() => {
         fetch(`/api/Categorias`)
@@ -60,7 +65,16 @@ export default function Header() {
                     {categorias
                         .filter((cat: any) => !cat.categoriaPaiId)
                         .map((cat: any) => (
-                            <a key={cat.id} href={`/catalogo/${cat.slug}`}>{cat.nome}</a>
+                            <div key={cat.id} className="nav-item">
+                                <a href={`/catalogo/${cat.slug}`}>{cat.nome}</a>
+                                {cat.subcategorias && cat.subcategorias.length > 0 && (
+                                    <div className="nav-dropdown">
+                                        {cat.subcategorias.map((sub : any)=>(
+                                            <a key={sub.id} href={`/catalogo/${sub.slug}`}>{sub.nome}</a>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
                         ))}
                 </nav>
                 <div className="header-actions">
@@ -77,8 +91,8 @@ export default function Header() {
                         <svg viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
                         </svg>
-                         <span className = "badge" style = {{ display: itensWishlist.length > 0 ? 'flex' : 'none' }}>
-                            { itensWishlist.length }
+                         <span className = "badge" style = {{ display: montado && itensWishlist.length > 0 ? 'flex' : 'none' }}>
+                            {montado ? itensWishlist.length: 0 }
                          </span>
                     </button>
                     <button className="icon-btn" aria-label="Carrinho de compras" title="Carrinho" onClick={abrirCarrinho}>
@@ -87,7 +101,7 @@ export default function Header() {
                             <line x1="3" y1="6" x2="21" y2="6" />
                             <path strokeLinecap="round" strokeLinejoin="round" d="M16 10a4 4 0 01-8 0" />
                         </svg>
-                        <span className="badge" style={{ display: itens.length > 0 ? 'flex' : 'none' }}>{itens.length}</span>
+                        <span className="badge" style={{ display: montado && itens.length > 0 ? 'flex' : 'none' }}>{montado ? itens.length : 0}</span>
                     </button>
                     {perfil ? (
                         <div className="user-dropdown-wrap">

@@ -15,7 +15,12 @@ export default function Produto({ params }: { params: { id: string } }) {
     const [avaliacoes, setAvaliacoes] = useState([])
     const [estrelas, setEstrelas] = useState(0)
     const [comentario, setComentario] = useState('')
+    const [largura, setLargura] = useState(0)
+    const [altura, setAltura] = useState(0)
+    const [resultado, setResultado] = useState(0)
+    const mostrarCalculadora = ['papel-de-parede', 'vinil', 'vinil-decorativo'].includes(produto?.categoria.slug)
     const router = useRouter()
+
 
     useEffect(() => {
         fetch(`/api/Produtos/${params.id}`)
@@ -67,6 +72,13 @@ export default function Produto({ params }: { params: { id: string } }) {
         } else {
             alert('Tens de estar autenticado para deixar uma avaliação.')
         }
+    }
+
+    function calcularRolos() {
+        const areaParede = largura * altura
+        const areaRolo = 10 * 0.53
+        const rolosNecessarios = Math.ceil((areaParede / areaRolo) * 1.1)
+        setResultado(rolosNecessarios)
     }
 
     return (
@@ -121,6 +133,25 @@ export default function Produto({ params }: { params: { id: string } }) {
                                 <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
                             </svg>
                         </button>
+                        {mostrarCalculadora && (
+                            <div className="calculadora-rolos">
+                                <h3>Calculadora de Rolos</h3>
+                                <div className="form-row">
+                                    <div className="form-group">
+                                        <label>Largura da parede (m)</label>
+                                        <input type="number" value={largura} onChange={(e) => setLargura(parseFloat(e.target.value))} />
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Altura da parede (m)</label>
+                                        <input type="number" value={altura} onChange={(e) => setAltura(parseFloat(e.target.value))} />
+                                    </div>
+                                </div>
+                                <button className="btn-guardar" onClick={calcularRolos}>Calcular</button>
+                                {resultado > 0 && (
+                                    <p className="resultado-rolos">Precisas de <strong>{resultado} rolos</strong> (incluindo margem de 10%)</p>
+                                )}
+                            </div>
+                        )}
                     </div>
                 </div>
 

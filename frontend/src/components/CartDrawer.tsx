@@ -1,11 +1,18 @@
 'use client'
 
 import { useCart } from '@/context/CartContext'
+import { useState, useEffect } from 'react'
 
 export default function CartDrawer() {
-    const { itens, removerItem, total, aberto, fecharCarrinho } = useCart()
 
-    if (!aberto) return null
+    const { itens, removerItem, total, aberto, fecharCarrinho } = useCart()
+    const [montado, setMontado] = useState(false)
+
+    useEffect(() => {
+        setMontado(true)
+    },[])
+
+    if (!montado || !aberto) return null
 
     return (
         <div className="cart-overlay" onClick={fecharCarrinho}>

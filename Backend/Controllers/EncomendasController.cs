@@ -117,7 +117,9 @@ public class EncomendasController : ControllerBase
             CodigoPostal = dto.CodigoPostal,
             Pais = dto.Pais,
             Notas = dto.Notas,
-            Total = dto.Total
+            Total = dto.Total,
+            MetodoEnvio = dto.MetodoEnvio,
+            CustoEnvio = dto.CustoEnvio
         };
 
         foreach (var item in dto.Itens)
@@ -158,6 +160,8 @@ public class EncomendaDto
     public string? Notas { get; set; }
     public decimal Total { get; set; }
     public List<ItemEncomendaDto> Itens { get; set; } = new();
+    public string? MetodoEnvio { get; set;}
+    public decimal CustoEnvio { get; set;}
 }
 
 public class ItemEncomendaDto

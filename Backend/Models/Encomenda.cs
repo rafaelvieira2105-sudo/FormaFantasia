@@ -20,4 +20,6 @@ public class Encomenda
     public string? Pais { get; set; }
     public string? Notas { get; set; }
     public decimal Total { get; set; }
+    public string? MetodoEnvio { get; set;}
+    public decimal CustoEnvio { get; set;}
 }

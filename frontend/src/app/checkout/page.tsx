@@ -19,10 +19,16 @@ export default function Checkout() {
     const [notas, setNotas] = useState('')
     const [termos, setTermos] = useState(false)
     const [transportadora, setTransportadora] = useState('')
+    const [envio, setEnvio] = useState('')
+    const [montado, setMontado] = useState(false)
 
     const { itens, total, limparCarrinho } = useCart()
 
     const router = useRouter()
+
+    useEffect(() => {
+        setMontado(true)
+    }, [])
 
     useEffect(() => {
         fetch(`/api/Utilizadores/me`, { credentials: 'include' })
@@ -64,6 +70,8 @@ export default function Checkout() {
                 Notas: notas,
                 Total: total,
                 CodigoPostal: codPostal,
+                MetodoEnvio: transportadora,
+                CustoEnvio: transportadora === 'loja' ? 0 : transportadora === 'especial' ? 65 : 8.90,
                 Itens: itens.map((item: any) => ({
                     ProdutoId: item.id,
                     Quantidade: item.quantidade,
@@ -173,7 +181,7 @@ export default function Checkout() {
                         { value: 'mbway', label: 'MB Way', img: '/pagamento/mbway.png' },
                         { value: 'multibanco', label: 'Multibanco', img: '/pagamento/multibanco.png' },
                         { value: 'paypal', label: 'PayPal', img: '/pagamento/paypal.png' },
-                        { value: 'cartao', label: 'Cartão de Crédito/Débito', img: '/pagamento/cartao.png' },
+                        { value: 'cartao', label: 'Cartão de Crédito/Débito', img: '/pagamento/visa_mastercard.png', height: '24px' },
                     ].map((metodo) => (
                         <label
                             key={metodo.value}
@@ -188,7 +196,7 @@ export default function Checkout() {
                                 onChange={(e) => setPagamento(e.target.value)}
                                 style={{ display: 'none' }}
                             />
-                            <img src={metodo.img} alt={metodo.label} style={{ height: '32px', objectFit: 'contain' }} />
+                            <img src={metodo.img} alt={metodo.label} style={{ height: metodo.height || '32px', width: 'auto', objectFit: 'contain' }} />
                             <span>{metodo.label}</span>
                             <div className={`pagamento-check ${pagamento === metodo.value ? 'ativo' : ''}`} />
                         </label>
@@ -199,8 +207,9 @@ export default function Checkout() {
                         Transportadora
                     </h3>
                     {[
-                        { value: 'ctt', label: 'CTT Expresso', preco: '4,99 €', prazo: '3-5 dias úteis' },
-                        { value: 'envialia', label: 'Envialia', preco: '6,99 €', prazo: '1-3 dias úteis' },
+                        { value: 'ctt_envialia', label: 'CTT / Envialia', preco: '8,90 €', prazo: 'Portugal Continental', img: '/pagamento/ctt.png' },
+                        { value: 'loja', label: 'Levantar em Loja', preco: 'Grátis', prazo: 'Figueira da Foz', img: '/pagamento/ff.png' },
+                        { value: 'especial', label: 'Transporte Especial', preco: '65,00€', prazo: 'Grandes encomendas ou medidas grandes', img: '/pagamento/transporte.png' }
                     ].map((t) => (
                         <label
                             key={t.value}
@@ -215,6 +224,7 @@ export default function Checkout() {
                                 onChange={(e) => setTransportadora(e.target.value)}
                                 style={{ display: 'none' }}
                             />
+                            {t.img && <img src={t.img} alt={t.label} style={{ height: '32px', width: 'auto', objectFit: 'contain' }} />}
                             <div style={{ flex: 1 }}>
                                 <span style={{ fontWeight: 600, fontSize: '14px' }}>{t.label}</span>
                                 <span style={{ display: 'block', fontSize: '12px', color: 'var(--text-muted)' }}>{t.prazo}</span>
@@ -238,15 +248,21 @@ export default function Checkout() {
             </div>
             <div className="checkout-resumo">
                 <h2>Resumo da Encomenda</h2>
-                {itens.map((item: any) => (
+                {montado && itens.map((item: any) => (
                     <div key={item.id} className="resumo-item">
                         <span>{item.nome} × {item.quantidade}</span>
                         <span>{(item.preco * item.quantidade).toFixed(2)} €</span>
                     </div>
                 ))}
+                {montado && transportadora && (
+                    <div className="resumo-item">
+                        <span>Envio ({transportadora === 'loja' ? 'Levantar em Loja' : transportadora === 'especial' ? 'Transporte Especial' : 'CTT / Envialia'})</span>
+                        <span>{transportadora === 'loja' ? 'Grátis' : transportadora === 'especial' ? '65,00 €' : '8,90 €'}</span>
+                    </div>
+                )}
                 <div className="resumo-total">
                     <span>Total</span>
-                    <span>{total.toFixed(2)} €</span>
+                    <span>{(montado ? (total + (transportadora === 'loja' ? 0 : transportadora === 'especial' ? 65 : transportadora ? 8.90 : 0)) : 0).toFixed(2)} €</span>
                 </div>
             </div>
         </div>

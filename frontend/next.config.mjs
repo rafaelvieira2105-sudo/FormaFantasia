@@ -10,7 +10,7 @@ const nextConfig = {
         return [
             {
                 source: '/api/:path*',
-                destination: 'http://localhost:5157/api/:path*',
+                destination: 'https://formafantasia-production.up.railway.app/api/:path*',
             },
         ]
     },

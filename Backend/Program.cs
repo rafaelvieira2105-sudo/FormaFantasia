@@ -39,7 +39,12 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("frontend", policy =>
     {
-        policy.WithOrigins("http://localhost:3000")
+        policy.WithOrigins(
+            "http://localhost:3000",
+            "https://forma-fantasia.vercel.app",
+            "https://formafantasia.pt",
+            "https://www.formafantasia.pt"
+            )
             .AllowAnyHeader()
             .AllowAnyMethod()
             .AllowCredentials();

@@ -25,4 +25,6 @@ public class Encomenda
     public string? MetodoPagamento { get; set; }
     public string? ReferenciaMultibanco { get; set; }
     public string? EntidadeMultibanco { get; set; }
+    public string? StripePaymentIntentId { get; set; }
+    public string? StripeClientSecret { get; set; }
 }

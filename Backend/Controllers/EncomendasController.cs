@@ -14,12 +14,14 @@ public class EncomendasController : ControllerBase
 {
     private readonly ApplicationDbContext _context;
     private readonly IfThenPayService _ifThenPay;
+    private readonly StripeService _stripe;
 
     //Injeção de dependência da base de dados
-    public EncomendasController(ApplicationDbContext context, IfThenPayService ifThenPay)
+    public EncomendasController(ApplicationDbContext context, IfThenPayService ifThenPay, StripeService stripe)
     {
         _context = context;
         _ifThenPay = ifThenPay;
+        _stripe = stripe;
     }
 
     // GET /api/Encomendas — todas (admin)
@@ -156,6 +158,13 @@ public class EncomendasController : ControllerBase
         else if (dto.MetodoPagamento == "mbway")
         {
             await _ifThenPay.PedirPagamentoMbWay(encomenda.Id, encomenda.Total, dto.Telefone);
+        }
+        else if (dto.MetodoPagamento == "cartao")
+        {
+            var intent = await _stripe.CriarPaymentIntent(encomenda.Total);
+            encomenda.StripePaymentIntentId = intent.Id;
+            encomenda.StripeClientSecret = intent.ClientSecret;
+            await _context.SaveChangesAsync();
         }
         return CreatedAtAction(nameof(Get), new { id = encomenda.Id }, encomenda);
     }

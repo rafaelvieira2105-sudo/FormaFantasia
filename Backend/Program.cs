@@ -36,6 +36,7 @@ builder.Services.AddControllers()
     });
 builder.Services.AddSignalR();
 builder.Services.AddHttpClient<IfThenPayService>();
+builder.Services.AddScoped<StripeService>();
 
 builder.Services.AddCors(options =>
 {

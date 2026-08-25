@@ -3,6 +3,11 @@
 import { useState, useEffect } from 'react'
 import { useCart } from '@/context/CartContext'
 import { useRouter } from 'next/navigation'
+import { loadStripe } from '@stripe/stripe-js'
+import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js'
+import FormularioCartao from '@/components/FormularioCartao'
+
+const stripePromise = loadStripe('pk_test_51U7MxMEkqJXuZRLLzV93eaPRk4ygB6QnKyBoIcmIwOhIkfQe229eUYi2FtoSqdOl82HRFBfw0K3VytxPMn9KZdgH00bHBr5JSI')  // a tua publishable key
 
 export default function Checkout() {
 
@@ -21,6 +26,8 @@ export default function Checkout() {
     const [transportadora, setTransportadora] = useState('')
     const [envio, setEnvio] = useState('')
     const [montado, setMontado] = useState(false)
+    const [stripeClientSecret, setStripeClientSecret] = useState('')
+    const [encomendaId, setEncomendaId] = useState<number>(0)
 
     const { itens, total, limparCarrinho } = useCart()
 
@@ -46,6 +53,14 @@ export default function Checkout() {
     }, [])
 
     async function confirmarEncomenda() {
+        // Verificar autenticação primeiro
+        const authRes = await fetch('/api/Utilizadores/auth', { credentials: 'include' })
+        const auth = await authRes.json()
+        if (!auth.isAuthenticated) {
+            router.push('/login?redirect=checkout')
+            return
+        }
+
         if (!email || !primeiroNome || !ultimoNome || !morada || !localidade || !codPostal || !pais || !telemovel) {
             alert('Preencha os campos obrigatórios!')
             return
@@ -53,6 +68,11 @@ export default function Checkout() {
 
         if (!termos) {
             alert('Confirme os termos e condições')
+            return
+        }
+
+        if (!transportadora) {
+            alert('Selecciona uma transportadora!')
             return
         }
 
@@ -81,21 +101,17 @@ export default function Checkout() {
             })
         })
 
-        const auth = await resposta.json()
-
-        if (!auth.isAuthenticated) {
-            router.push('/login?redirect=checkout')
-            return
-        }
-
         if (resposta.ok) {
-            limparCarrinho()
-            router.push('/checkout/confirmacao')
-        }
+            const dados = await resposta.json()
 
-        if (!transportadora) {
-            alert('Selecciona uma transportadora!')
-            return
+            if (pagamento === 'cartao' && dados.stripeClientSecret) {
+                setEncomendaId(dados.id)
+                setStripeClientSecret(dados.stripeClientSecret)
+                return
+            }
+
+            limparCarrinho()
+            router.push(`/checkout/confirmacao?id=${dados.id}`)
         }
     }
 
@@ -246,6 +262,11 @@ export default function Checkout() {
                 <div className="final-btn">
                     <button className="btn-auth" onClick={confirmarEncomenda}>Finalizar Encomenda</button>
                 </div>
+                {stripeClientSecret && (
+                    <Elements stripe={stripePromise} options={{ clientSecret: stripeClientSecret }}>
+                        <FormularioCartao encomendaId={encomendaId} />
+                    </Elements>
+                )}
             </div>
             <div className="checkout-resumo">
                 <h2>Resumo da Encomenda</h2>

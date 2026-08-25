@@ -71,6 +71,7 @@ export default function Checkout() {
                 Total: total,
                 CodigoPostal: codPostal,
                 MetodoEnvio: transportadora,
+                MetodoPagamento: pagamento,
                 CustoEnvio: transportadora === 'loja' ? 0 : transportadora === 'especial' ? 65 : 8.90,
                 Itens: itens.map((item: any) => ({
                     ProdutoId: item.id,

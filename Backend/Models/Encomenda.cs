@@ -20,6 +20,9 @@ public class Encomenda
     public string? Pais { get; set; }
     public string? Notas { get; set; }
     public decimal Total { get; set; }
-    public string? MetodoEnvio { get; set;}
-    public decimal CustoEnvio { get; set;}
+    public string? MetodoEnvio { get; set; }
+    public decimal CustoEnvio { get; set; }
+    public string? MetodoPagamento { get; set; }
+    public string? ReferenciaMultibanco { get; set; }
+    public string? EntidadeMultibanco { get; set; }
 }

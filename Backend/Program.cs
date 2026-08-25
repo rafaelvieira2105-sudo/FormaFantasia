@@ -3,6 +3,7 @@ using FormaFantasia.Web.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using FormaFantasia.Web.Hubs;
+using FormaFantasia.Web.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -34,6 +35,7 @@ builder.Services.AddControllers()
         options.JsonSerializerOptions.PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase;
     });
 builder.Services.AddSignalR();
+builder.Services.AddHttpClient<IfThenPayService>();
 
 builder.Services.AddCors(options =>
 {
@@ -56,6 +58,7 @@ var localizationOptions = new Microsoft.AspNetCore.Builder.RequestLocalizationOp
     .SetDefaultCulture(supportedCultures[0])
     .AddSupportedCultures(supportedCultures)
     .AddSupportedUICultures(supportedCultures);
+
 
 var app = builder.Build();
 

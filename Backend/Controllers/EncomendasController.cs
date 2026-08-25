@@ -3,6 +3,7 @@ using FormaFantasia.Web.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using FormaFantasia.Web.Models;
+using FormaFantasia.Web.Services;
 
 namespace FormaFantasia.Web.Controllers;
 
@@ -12,11 +13,13 @@ namespace FormaFantasia.Web.Controllers;
 public class EncomendasController : ControllerBase
 {
     private readonly ApplicationDbContext _context;
+    private readonly IfThenPayService _ifThenPay;
 
     //Injeção de dependência da base de dados
-    public EncomendasController(ApplicationDbContext context)
+    public EncomendasController(ApplicationDbContext context, IfThenPayService ifThenPay)
     {
         _context = context;
+        _ifThenPay = ifThenPay;
     }
 
     // GET /api/Encomendas — todas (admin)
@@ -139,6 +142,21 @@ public class EncomendasController : ControllerBase
 
         _context.Encomendas.Add(encomenda);
         await _context.SaveChangesAsync();
+        // Gerar referência de pagamento
+        if (dto.MetodoPagamento == "multibanco")
+        {
+            var referencia = await _ifThenPay.GerarReferenciaMultibanco(encomenda.Id, encomenda.Total);
+            if (referencia != null)
+            {
+                encomenda.ReferenciaMultibanco = referencia.Referencia;
+                encomenda.EntidadeMultibanco = referencia.Entidade;
+                await _context.SaveChangesAsync();
+            }
+        }
+        else if (dto.MetodoPagamento == "mbway")
+        {
+            await _ifThenPay.PedirPagamentoMbWay(encomenda.Id, encomenda.Total, dto.Telefone);
+        }
         return CreatedAtAction(nameof(Get), new { id = encomenda.Id }, encomenda);
     }
 }
@@ -160,8 +178,11 @@ public class EncomendaDto
     public string? Notas { get; set; }
     public decimal Total { get; set; }
     public List<ItemEncomendaDto> Itens { get; set; } = new();
-    public string? MetodoEnvio { get; set;}
-    public decimal CustoEnvio { get; set;}
+    public string? MetodoEnvio { get; set; }
+    public decimal CustoEnvio { get; set; }
+    public string? MetodoPagamento { get; set; }
+    public string? ReferenciaMultibanco { get; set; }
+    public string? EntidadeMultibanco { get; set; }
 }
 
 public class ItemEncomendaDto

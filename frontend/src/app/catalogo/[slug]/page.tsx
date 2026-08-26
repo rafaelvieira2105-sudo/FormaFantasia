@@ -9,6 +9,10 @@ export default function PaginaCatalogo({ params }: { params: { slug: string } })
     const [categoria, setCategoria] = useState<any>(null)
     const [produtos, setProdutos] = useState([])
     const { toggleItem, itens: itensWishlist } = useWishList()
+    const [pagina, setPagina] = useState(1)
+    const produtosPorPagina = 24
+    const totalPaginas = Math.ceil(produtos.length / produtosPorPagina)
+    const produtosPagina = produtos.slice((pagina - 1) * produtosPorPagina, pagina * produtosPorPagina)
 
     useEffect(() => {
         fetch(`/api/Categorias/slug/${params.slug}`)
@@ -39,7 +43,7 @@ export default function PaginaCatalogo({ params }: { params: { slug: string } })
                         </p>
                     ) : (
                         <div className="products-grid">
-                            {produtos.map((p: any) => (
+                            {produtosPagina.map((p: any) => (
                                 <a key={p.id} href={`/produto/${p.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                                     <div className="product-card">
                                         <div className="product-card-img">
@@ -72,6 +76,29 @@ export default function PaginaCatalogo({ params }: { params: { slug: string } })
                                     </div>
                                 </a>
                             ))}
+                        </div>
+                    )}
+                    {totalPaginas > 1 && (
+                        <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', marginTop: '2rem' }}>
+                            <button
+                                className="btn-guardar"
+                                onClick={() => setPagina(p => Math.max(1, p - 1))}
+                                disabled={pagina === 1}
+                                style={{ opacity: pagina === 1 ? .5 : 1 }}
+                            >
+                                ← Anterior
+                            </button>
+                            <span style={{ display: 'flex', alignItems: 'center', fontSize: '14px', color: 'var(--text-secondary)' }}>
+                                Página {pagina} de {totalPaginas}
+                            </span>
+                            <button
+                                className="btn-guardar"
+                                onClick={() => setPagina(p => Math.min(totalPaginas, p + 1))}
+                                disabled={pagina === totalPaginas}
+                                style={{ opacity: pagina === totalPaginas ? .5 : 1 }}
+                            >
+                                Próxima →
+                            </button>
                         </div>
                     )}
                 </div>

@@ -90,7 +90,7 @@ export default function EditarCategoria({ params }: { params: { id: string } }) 
                     <label>Categoria Pai</label>
                     <select value={categoriaPaiId} onChange={(e) => setCategoriaPaiId(e.target.value)}>
                         <option value="">— Sem categoria pai —</option>
-                        {categorias.map((c: any) => (
+                        {categorias.filter((c: any) => !c.categoriaPaiId).map((c: any) => (
                             <option key={c.id} value={c.id}>{c.nome}</option>
                         ))}
                     </select>

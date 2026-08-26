@@ -2464,7 +2464,7 @@ footer {
   display: block;
   padding: .5rem 1rem;
   font-size: 13px;
-  color: var(--text-primary);
+  color: var(--text-primary) !important;
   transition: all .2s;
 }
 

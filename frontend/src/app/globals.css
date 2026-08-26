@@ -2488,6 +2488,6 @@ nav[aria-label="Navegação principal"] {
 .nav-item > a {
   color: var(--text-primary);
   text-decoration: none;
-  padding: .5rem 0;
-  display: block;
+  font-size: 14px;
+  font-weight: 500;
 }

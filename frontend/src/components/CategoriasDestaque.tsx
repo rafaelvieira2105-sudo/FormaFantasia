@@ -45,7 +45,7 @@ export default function CategoriasDestaque() {
                 >
                     Todos
                 </button>
-                {categorias.map((cat: any) => !cat.categoriaPaiId).map((cat: any) =>(
+                {categorias.map((cat: any) => !cat.categoriaPai).map((cat: any) =>(
                     <button
                         key={cat.id}
                         className={categoriaAtiva === cat.slug ? 'filter-btn active' : 'filter-btn'}

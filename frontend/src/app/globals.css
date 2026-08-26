@@ -2484,3 +2484,10 @@ nav[aria-label="Navegação principal"] {
   display: flex;
   align-items: center;
 }
+
+.nav-item>a {
+  color: inherit;
+  text-decoration: none;
+  padding: .5rem 0;
+  display: block;
+}

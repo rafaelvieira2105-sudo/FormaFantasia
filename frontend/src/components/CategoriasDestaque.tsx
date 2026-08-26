@@ -24,10 +24,11 @@ export default function CategoriasDestaque() {
 
     const [categoriaAtiva, setCategoriaAtiva] = useState('todos')
 
-    const produtosFiltrados = categoriaAtiva === 'todos'
+    const produtosFiltrados = (categoriaAtiva === 'todos'
         ? produtos
         : produtos.filter((p: any) => p.categoria?.slug === categoriaAtiva)
-
+    ).slice(0,24)
+    
     return (
         <section className="section products-section" style={{ paddingTop: '5rem', paddingBottom: '5rem' }}>
             <div className="container">
@@ -44,7 +45,7 @@ export default function CategoriasDestaque() {
                 >
                     Todos
                 </button>
-                {categorias.map((cat: any) => (
+                {categorias.map((cat: any) => !cat.categoriaPaiId).map((cat: any) =>(
                     <button
                         key={cat.id}
                         className={categoriaAtiva === cat.slug ? 'filter-btn active' : 'filter-btn'}

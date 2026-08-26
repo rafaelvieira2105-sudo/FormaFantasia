@@ -2490,4 +2490,6 @@ nav[aria-label="Navegação principal"] {
   text-decoration: none;
   font-size: 14px;
   font-weight: 500;
+  position: relative;
+  z-index: 1;
 }

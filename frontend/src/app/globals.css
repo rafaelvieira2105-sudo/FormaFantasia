@@ -2485,8 +2485,8 @@ nav[aria-label="Navegação principal"] {
   align-items: center;
 }
 
-.nav-item>a {
-  color: inherit;
+.nav-item > a {
+  color: var(--text-primary);
   text-decoration: none;
   padding: .5rem 0;
   display: block;

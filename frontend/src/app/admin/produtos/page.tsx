@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react'
 export default function Produtos() {
 
     const [produtos, setProdutos] = useState([])
+    const [pesquisa, setPesquisa] = useState('')
 
     useEffect(() => {
         fetch(`/api/produtos`, { credentials: 'include' })
@@ -23,6 +24,13 @@ export default function Produtos() {
         setProdutos(produtos.filter((p: any) => p.id !== id))
     }
 
+    const produtosFiltrados = pesquisa
+        ? produtos.filter((p: any) =>
+            p.nome.toLowerCase().includes(pesquisa.toLowerCase()) ||
+            p.referencia?.toLowerCase().includes(pesquisa.toLowerCase())
+        )
+        : produtos
+
     return (
         <div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
@@ -33,7 +41,13 @@ export default function Produtos() {
                     + Novo Produto
                 </a>
             </div>
-
+            <input
+                type="text"
+                placeholder="Pesquisar por nome ou referência..."
+                value={pesquisa}
+                onChange={(e) => setPesquisa(e.target.value)}
+                style={{ width: '100%', padding: '.75rem 1rem', border: '1px solid var(--border)', borderRadius: '8px', marginBottom: '1rem', fontFamily: 'inherit', fontSize: '14px' }}
+            />
             <table style={{ width: '100%', borderCollapse: 'collapse', background: 'var(--white)', borderRadius: '10px', overflow: 'hidden', border: '1px solid var(--border)' }}>
                 <thead style={{ background: 'var(--cream-dark)' }}>
                     <tr>
@@ -45,7 +59,7 @@ export default function Produtos() {
                     </tr>
                 </thead>
                 <tbody>
-                    {produtos.map((p: any) => (
+                    {produtosFiltrados.map((p: any) => (
                         <tr key={p.id} style={{ borderTop: '1px solid var(--border-light)' }}>
                             <td style={{ padding: '.75rem 1rem', fontSize: '13px' }}>{p.nome}</td>
                             <td style={{ padding: '.75rem 1rem', fontSize: '13px' }}>{p.referencia || '—'}</td>

@@ -37,6 +37,11 @@ export default function EditarProduto({ params }: { params: { id: string } }) {
                 setReferencia(data.referencia)
                 setTag(data.tag)
                 setPrecoOriginal(data.precoOriginal)
+                if (data.categoriaId) {
+                    fetch(`/api/Categorias/${data.categoriaId}`)
+                        .then(res => res.json())
+                        .then(cat => setSubcategorias(cat.subcategorias || []))
+                }
             })
     }, [])
 

@@ -16,6 +16,9 @@ export default function Novo() {
     const [tag, setTag] = useState('')
     const [precoOriginal, setPrecoOriginal] = useState(0)
     const [categorias, setCategorias] = useState([])
+    const [subcategorias, setSubcategorias] = useState([])
+    const [subcategoriaId, setSubcategoriaId] = useState('')
+
 
     useEffect(() => {
         fetch(`/api/Categorias`, { credentials: 'include' })
@@ -39,7 +42,7 @@ export default function Novo() {
                 Descricao: descricao,
                 Preco: preco,
                 Stock: stock,
-                CategoriaId: categoriaId,
+                CategoriaId: subcategoriaId ? parseInt(subcategoriaId) : categoriaId,
                 Referencia: referencia,
                 Tag: tag || null,
                 PrecoOriginal: precoOriginal || null
@@ -50,6 +53,14 @@ export default function Novo() {
             router.push('/admin/produtos')
         }
 
+    }
+
+    async function onCategoriaChange(id: string) {
+        setCategoriaId(parseInt(id))
+        setSubcategoriaId('')
+        const res = await fetch(`/api/Categorias/${id}`)
+        const data = await res.json()
+        setSubcategorias(data.subcategorias || [])
     }
 
     return (
@@ -109,13 +120,24 @@ export default function Novo() {
                 </div>
                 <div className="form-group">
                     <label>Categoria</label>
-                    <select value={categoriaId} onChange={(e) => setCategoriaId(parseInt(e.target.value))}>
+                    <select value={categoriaId} onChange={(e) => onCategoriaChange(e.target.value)}>
                         <option value="">— Seleciona uma categoria —</option>
                         {categorias.map((c: any) => (
                             <option key={c.id} value={c.id}>{c.nome}</option>
                         ))}
                     </select>
                 </div>
+                {subcategorias.length > 0 && (
+                    <div className="form-group">
+                        <label>Subcategoria</label>
+                        <select value={subcategoriaId} onChange={(e) => setSubcategoriaId(e.target.value)}>
+                            <option value="">— Sem subcategoria —</option>
+                            {subcategorias.map((s: any) => (
+                                <option key={s.id} value={s.id}>{s.nome}</option>
+                            ))}
+                        </select>
+                    </div>
+                )}
                 <div className="form-group">
                     <label>Tag</label>
                     <select value={tag} onChange={(e) => setTag(e.target.value)}>

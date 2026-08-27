@@ -15,7 +15,6 @@ export default function Footer() {
           <ul>
             <li><a href="/condicoes">Condições</a></li>
             <li><a href="/condicoes-uso">Condições De Uso</a></li>
-            <li><a href="/creditos">Sobre o Projeto</a></li>
             <li><a href="/sobre-nos">Sobre Nós</a></li>
             <li><a href="/pagamento-seguro">Pagamento Seguro</a></li>
             <li><a href="/contactos">Contactos</a></li>

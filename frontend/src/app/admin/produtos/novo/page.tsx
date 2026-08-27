@@ -122,7 +122,7 @@ export default function Novo() {
                     <label>Categoria</label>
                     <select value={categoriaId} onChange={(e) => onCategoriaChange(e.target.value)}>
                         <option value="">— Seleciona uma categoria —</option>
-                        {categorias.map((c: any) => (
+                        {categorias.filter((c: any) => !c.categoriaPaiId).map((c: any) => (
                             <option key={c.id} value={c.id}>{c.nome}</option>
                         ))}
                     </select>

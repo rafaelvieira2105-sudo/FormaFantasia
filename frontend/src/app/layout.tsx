@@ -7,6 +7,7 @@ import CartDrawer from '@/components/CartDrawer'
 import ConditionalHeader from '@/components/ConditionalHeader'
 import { WishListProvider } from '@/context/WishListContext'
 import WishlistDrawer from '@/components/WishlistDrawer'
+import Script from 'next/script'
 
 
 export const metadata: Metadata = {
@@ -35,6 +36,7 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${cormorant.variable} antialiased`}
       >
+        <Script src="https://widget.cloudinary.com/v2.0/global/all.js" strategy="beforeInteractive" />
         <CartProvider>
           <WishListProvider>
             <ConditionalHeader />

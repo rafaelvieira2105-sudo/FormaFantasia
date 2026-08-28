@@ -18,6 +18,7 @@ export default function Novo() {
     const [categorias, setCategorias] = useState([])
     const [subcategorias, setSubcategorias] = useState([])
     const [subcategoriaId, setSubcategoriaId] = useState('')
+    const [fotoUrl, setFotoUrl] = useState('')
 
 
     useEffect(() => {
@@ -44,6 +45,7 @@ export default function Novo() {
                 Stock: stock,
                 CategoriaId: subcategoriaId ? parseInt(subcategoriaId) : categoriaId,
                 Referencia: referencia,
+                FotoUrl: fotoUrl,
                 Tag: tag || null,
                 PrecoOriginal: precoOriginal || null
             })
@@ -146,6 +148,39 @@ export default function Novo() {
                         <option value="promo">Promoção</option>
                         <option value="stockoff">Stock Off</option>
                     </select>
+                </div>
+                <div className="form-group">
+                    <label>Foto do Produto</label>
+                    {fotoUrl && (
+                        <img src={fotoUrl} alt="Preview" style={{ width: '100%', maxHeight: '200px', objectFit: 'cover', borderRadius: '8px', marginBottom: '.75rem' }} />
+                    )}
+                    <input
+                        type="text"
+                        placeholder="URL da imagem"
+                        value={fotoUrl || ''}
+                        onChange={(e) => setFotoUrl(e.target.value)}
+                    />
+                    <button
+                        type="button"
+                        className="btn-guardar"
+                        style={{ marginTop: '.5rem', width: '100%' }}
+                        onClick={() => {
+                            const widget = (window as any).cloudinary.createUploadWidget(
+                                {
+                                    cloudName: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
+                                    uploadPreset: 'formafantasia',
+                                },
+                                (error: any, result: any) => {
+                                    if (result.event === 'success') {
+                                        setFotoUrl(result.info.secure_url)
+                                    }
+                                }
+                            )
+                            widget.open()
+                        }}
+                    >
+                        📷 Upload de Foto
+                    </button>
                 </div>
             </div>
         </div>

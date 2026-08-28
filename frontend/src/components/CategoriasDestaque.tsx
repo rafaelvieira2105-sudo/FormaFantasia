@@ -14,12 +14,23 @@ export default function CategoriasDestaque() {
             .then(data => setCategorias(data))
     }, [])
 
-    const [produtos, setProdutos] = useState([])
+    const [produtos, setProdutos] = useState<any>([])
 
     useEffect(() => {
-        fetch(`/api/Produtos`)
+        fetch('/api/Categorias')
             .then(res => res.json())
-            .then(data => setProdutos(data))
+            .then(async (cats) => {
+                const categoriasPrincipais = cats.filter((c: any) => !c.categoriaPaiId)
+                const todosProdutos: any[] = []
+
+                for (const cat of categoriasPrincipais.slice(0, 6)) {
+                    const res = await fetch(`/api/Produtos?categoriaId=${cat.id}`)
+                    const prods = await res.json()
+                    todosProdutos.push(...prods.slice(0, 4))
+                }
+
+                setProdutos(todosProdutos)
+            })
     }, [])
 
     const [categoriaAtiva, setCategoriaAtiva] = useState('todos')
@@ -27,8 +38,8 @@ export default function CategoriasDestaque() {
     const produtosFiltrados = (categoriaAtiva === 'todos'
         ? produtos
         : produtos.filter((p: any) => p.categoria?.slug === categoriaAtiva)
-    ).slice(0,24)
-    
+    ).slice(0, 24)
+
     return (
         <section className="section products-section" style={{ paddingTop: '5rem', paddingBottom: '5rem' }}>
             <div className="container">
@@ -45,7 +56,7 @@ export default function CategoriasDestaque() {
                 >
                     Todos
                 </button>
-                {categorias.filter((cat: any) => !cat.categoriaPai).map((cat: any) =>(
+                {categorias.filter((cat: any) => !cat.categoriaPai).map((cat: any) => (
                     <button
                         key={cat.id}
                         className={categoriaAtiva === cat.slug ? 'filter-btn active' : 'filter-btn'}

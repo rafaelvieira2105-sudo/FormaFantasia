@@ -32,7 +32,7 @@ public static class SeedData
                 EmailConfirmed = true
             };
 
-            var result = await userManager.CreateAsync(admin, "formafantasia");
+            var result = await userManager.CreateAsync(admin, "FormaFantasia#2026");
             if (result.Succeeded)
                 await userManager.AddToRoleAsync(admin, "Admin");
         }

@@ -2493,3 +2493,7 @@ nav[aria-label="Navegação principal"] {
   position: relative;
   z-index: 1;
 }
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
+}

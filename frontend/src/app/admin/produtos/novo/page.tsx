@@ -155,52 +155,31 @@ export default function Novo() {
                         <img src={fotoUrl} alt="Preview" style={{ width: '100%', maxHeight: '200px', objectFit: 'cover', borderRadius: '8px', marginBottom: '.75rem' }} />
                     )}
                     <input
+                        type="file"
+                        accept="image/*"
+                        onChange={async (e) => {
+                            const file = e.target.files?.[0]
+                            if (!file) return
+
+                            const formData = new FormData()
+                            formData.append('file', file)
+                            formData.append('upload_preset', 'formafantasia')
+
+                            const res = await fetch(`https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`, {
+                                method: 'POST',
+                                body: formData
+                            })
+                            const data = await res.json()
+                            setFotoUrl(data.secure_url)
+                        }}
+                    />
+                    <input
                         type="text"
-                        placeholder="URL da imagem"
+                        placeholder="Ou cola aqui o URL da imagem"
                         value={fotoUrl || ''}
                         onChange={(e) => setFotoUrl(e.target.value)}
+                        style={{ marginTop: '.5rem' }}
                     />
-                    <button
-                        type="button"
-                        className="btn-guardar"
-                        style={{ marginTop: '.5rem', width: '100%' }}
-                        onClick={() => {
-                            if (!(window as any).cloudinary) {
-                                const script = document.createElement('script')
-                                script.src = 'https://widget.cloudinary.com/v2.0/global/all.js'
-                                script.onload = () => {
-                                    const widget = (window as any).cloudinary.createUploadWidget(
-                                        {
-                                            cloudName: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
-                                            uploadPreset: 'formafantasia',
-                                        },
-                                        (error: any, result: any) => {
-                                            if (result?.event === 'success') {
-                                                setFotoUrl(result.info.secure_url)
-                                            }
-                                        }
-                                    )
-                                    widget.open()
-                                }
-                                document.body.appendChild(script)
-                            } else {
-                                const widget = (window as any).cloudinary.createUploadWidget(
-                                    {
-                                        cloudName: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
-                                        uploadPreset: 'formafantasia',
-                                    },
-                                    (error: any, result: any) => {
-                                        if (result?.event === 'success') {
-                                            setFotoUrl(result.info.secure_url)
-                                        }
-                                    }
-                                )
-                                widget.open()
-                            }
-                        }}
-                    >
-                        📷 Upload de Foto
-                    </button>
                 </div>
             </div>
         </div>

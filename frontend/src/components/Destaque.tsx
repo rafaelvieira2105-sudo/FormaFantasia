@@ -44,51 +44,27 @@ export default function Destaque() {
                 {destaque?.[0] && (
                     <a href={`/produto/${destaque[0].id}`} className="highlight-card">
                         {destaque[0].fotoUrl && (
-                            <img src={destaque[0].fotoUrl} alt={destaque[0].nome} style={{ width: '100%', height: '200px', objectFit: 'cover', borderRadius: '8px', marginBottom: '1rem' }} />
+                            <img src={destaque[0].fotoUrl} alt={destaque[0].nome} style={{ width: '100%', height: '180px', objectFit: 'cover', borderRadius: '8px', marginBottom: '1rem' }} />
                         )}
-                        <div className="highlight-visual hv-greek"></div>
-                        <div className="highlight-visual hv-greek"></div>
-                        <span className="highlight-badge badge-new">Novidade</span>
+                        <span className="highlight-badge badge-new">Em Destaque</span>
                         <h3>{destaque[0].nome}</h3>
-                        <p>{destaque[0].descricao?.substring(0, 100)}</p>
-                        <span className="highlight-link">
-                            Ver produto
-                            <svg viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M12 5l7 7-7 7" /></svg>
-                        </span>
+                        <span className="highlight-link">Ver produto →</span>
                     </a>
                 )}
-                {stockoff?.[0] && (
-                    <a href={`/produto/${stockoff[0].id}`} className="highlight-card">
-                        {destaque[0].fotoUrl && (
-                            <img src={destaque[0].fotoUrl} alt={destaque[0].nome} style={{ width: '100%', height: '200px', objectFit: 'cover', borderRadius: '8px', marginBottom: '1rem' }} />
-                        )}
-                        <div className="highlight-visual hv-greek"></div>
-                        <div className="highlight-visual hv-marble"></div>
-                        <span className="highlight-badge badge-promo">Stock Off</span>
-                        <h3>{stockoff[0].nome}</h3>
-                        <p>{stockoff[0].descricao?.substring(0, 100)}</p>
-                        <span className="highlight-link">
-                            Ver produto
-                            <svg viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M12 5l7 7-7 7" /></svg>
-                        </span>
-                    </a>
-                )}
-                {promo?.[0] && (
-                    <a href={`/produto/${promo[0].id}`} className="highlight-card">
-                        {destaque[0].fotoUrl && (
-                            <img src={destaque[0].fotoUrl} alt={destaque[0].nome} style={{ width: '100%', height: '200px', objectFit: 'cover', borderRadius: '8px', marginBottom: '1rem' }} />
-                        )}
-                        <div className="highlight-visual hv-greek"></div>
-                        <div className="highlight-visual hv-floral"></div>
-                        <span className="highlight-badge badge-dest">Promoção</span>
-                        <h3>{promo[0].nome}</h3>
-                        <p>{promo[0].descricao?.substring(0, 100)}</p>
-                        <span className="highlight-link">
-                            Ver produto
-                            <svg viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M12 5l7 7-7 7" /></svg>
-                        </span>
-                    </a>
-                )}
+                <a href="/catalogo/papel-de-parede" className="highlight-card">
+                    <div className="highlight-visual hv-marble"></div>
+                    <span className="highlight-badge badge-promo">Novidades</span>
+                    <h3>Papel de Parede</h3>
+                    <p>Descobre as últimas novidades em papel de parede decorativo.</p>
+                    <span className="highlight-link">Ver catálogo →</span>
+                </a>
+                <a href="/catalogo/vinil-decorativo" className="highlight-card">
+                    <div className="highlight-visual hv-floral"></div>
+                    <span className="highlight-badge badge-dest">Popular</span>
+                    <h3>Vinil Decorativo</h3>
+                    <p>Transforma qualquer superfície com vinil decorativo de qualidade.</p>
+                    <span className="highlight-link">Ver catálogo →</span>
+                </a>
             </div>
         </section>
     )

@@ -23,10 +23,10 @@ export default function CategoriasDestaque() {
                 const categoriasPrincipais = cats.filter((c: any) => !c.categoriaPaiId)
                 const todosProdutos: any[] = []
 
-                for (const cat of categoriasPrincipais.slice(0, 6)) {
+                for (const cat of categoriasPrincipais.slice(0, 8)) {
                     const res = await fetch(`/api/Produtos?categoriaId=${cat.id}`)
                     const prods = await res.json()
-                    todosProdutos.push(...prods.slice(0, 4))
+                    todosProdutos.push(...prods.slice(0, 6))
                 }
 
                 setProdutos(todosProdutos)

@@ -20,7 +20,7 @@ public static class SeedData
         }
 
         // Criar utilizador Admin se não existir
-        var adminEmail = "admin@formafantasia.pt";
+        var adminEmail = "Geral@formafantasia.pt";
         if (await userManager.FindByEmailAsync(adminEmail) == null)
         {
             var admin = new Utilizador
@@ -32,7 +32,7 @@ public static class SeedData
                 EmailConfirmed = true
             };
 
-            var result = await userManager.CreateAsync(admin, "Admin@123456");
+            var result = await userManager.CreateAsync(admin, "formafantasia");
             if (result.Succeeded)
                 await userManager.AddToRoleAsync(admin, "Admin");
         }

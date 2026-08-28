@@ -18,4 +18,5 @@ public class ApplicationDbContext : IdentityDbContext<Utilizador>
     public DbSet<ItemEncomenda> ItensEncomenda { get; set;}
     public DbSet<Avaliacao> Avaliacao { get; set;}
     public DbSet<Avaliacao> Avaliacoes { get; set; }
+    public DbSet<HeroImagem> HeroImagens { get; set; }
 }

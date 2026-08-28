@@ -179,21 +179,6 @@ public class UtilizadoresController : ControllerBase
         return BadRequest(new { message = string.Join(", ", result.Errors.Select(e => e.Description)) });
     }
 
-
-    [HttpPost("reset-admin")]
-    public async Task<IActionResult> ResetAdmin()
-    {
-        // Tenta encontrar o admin com qualquer um dos emails possíveis
-        var user = await _userManager.FindByEmailAsync("Geral@formafantasia.pt")
-                ?? await _userManager.FindByEmailAsync("admin@formafantasia.pt");
-
-        if (user == null) return NotFound("Admin não encontrado");
-
-        var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-        await _userManager.ResetPasswordAsync(user, token, "82098209Rs@");
-
-        return Ok($"Password reposta para Admin@123456 no email {user.Email}");
-    }
 }
 // Estrutura de Dados recebidas e enviadas para o Frontend
 public class UpdateMeDto

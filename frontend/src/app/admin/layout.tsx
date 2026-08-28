@@ -42,6 +42,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                     <a href="/admin/produtos">Produtos</a>
                     <a href="/admin/encomendas">Encomendas</a>
                     <a href="/admin/utilizadores">Utilizadores</a>
+                    <a href="/admin/hero">Hero</a>
                 </aside>
                 <main className="admin-main">
                     {children}

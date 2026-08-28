@@ -1,40 +1,59 @@
+'use client'
+
+import { useState, useEffect } from 'react'
+
 export default function Hero() {
-    return (
-        <section className="hero">
-            <div className="hero-inner">
-                <div className="hero-content">
-                    <p className="hero-eyebrow">Coleção 2026</p>
-                    <h1 className="hero-title">Transforma<br />as tuas <em>paredes</em><br />em arte</h1>
-                    <p className="hero-subtitle">Papel de parede de luxo, vinil decorativo e tapeçarias exclusivas para cada ambiente.
-                        Mais de 2000 referências disponíveis.</p>
-                    <div className="hero-ctas">
-                        <a href="catalogo-hub.html" className="btn-primary">
-                            <svg viewBox="0 0 24 24" style={{ width: '14px', height: '14px', stroke: 'currentColor', fill: 'none', strokeWidth: 2.5 }}>
-                                <rect x="3" y="3" width="7" height="7" />
-                                <rect x="14" y="3" width="7" height="7" />
-                                <rect x="14" y="14" width="7" height="7" />
-                                <rect x="3" y="14" width="7" height="7" />
-                            </svg>
-                            Ver Catálogo
-                        </a>
-                        <a href="sobre-nos.html" className="btn-secondary">
-                            <svg viewBox="0 0 24 24" style={{ width: '14px', height: '14px', stroke: 'currentColor', fill: 'none', strokeWidth: 2 }}>
-                                <path strokeLinecap="round" strokeLinejoin="round"
-                                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            Sobre Nós
-                        </a>
-                    </div>
-                </div>
-                <div className="hero-visual" aria-hidden="true">
-                    <div className="hero-visual-grid">
-                        <div className="hero-swatch pattern-greek"></div>
-                        <div className="hero-swatch pattern-waves"></div>
-                        <div className="hero-swatch pattern-damask"></div>
-                        <div className="hero-swatch pattern-geometric"></div>
-                    </div>
-                </div>
+  const [imagens, setImagens] = useState<any[]>([])
+  const [atual, setAtual] = useState(0)
+
+  useEffect(() => {
+    fetch('/api/HeroImagens')
+      .then(res => res.json())
+      .then(data => setImagens(data))
+  }, [])
+
+  useEffect(() => {
+    if (imagens.length === 0) return
+    const timer = setInterval(() => {
+      setAtual(a => (a + 1) % imagens.length)
+    }, 5000)
+    return () => clearInterval(timer)
+  }, [imagens])
+
+  return (
+    <section className="hero">
+      <div className="hero-slider">
+        {imagens.length > 0 ? (
+          <>
+            <img
+              src={imagens[atual]?.imagemUrl}
+              alt="Hero"
+              style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'absolute', inset: 0 }}
+            />
+            <div className="hero-overlay" />
+            <div className="hero-dots">
+              {imagens.map((_: any, i: number) => (
+                <button
+                  key={i}
+                  onClick={() => setAtual(i)}
+                  className={i === atual ? 'hero-dot active' : 'hero-dot'}
+                />
+              ))}
             </div>
-        </section>
-    )
+          </>
+        ) : (
+          <div style={{ background: 'var(--navy)', width: '100%', height: '100%' }} />
+        )}
+        <div className="hero-inner">
+          <p className="hero-eyebrow">Decoração de Interiores</p>
+          <h1 className="hero-title">
+            Transforma<br />o teu espaço
+          </h1>
+          <p className="hero-subtitle">
+            Papel de parede, vinil decorativo, tapeçarias e muito mais.
+          </p>
+        </div>
+      </div>
+    </section>
+  )
 }

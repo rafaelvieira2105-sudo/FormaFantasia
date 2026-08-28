@@ -54,12 +54,8 @@ export default function Footer() {
         <div className="payment-icons">
           <span className="payment-icon">MB WAY</span>
           <span className="payment-icon">Multibanco</span>
-          <span className="payment-icon">Transf. Bancária</span>
           <span className="payment-icon">PayPal</span>
-        </div>
-        <div className="secure-badges">
-          <span className="secure-badge">Loja Protegida SSL</span>
-          <span className="secure-badge">Comodo Secure</span>
+          <span className="payment-icon">Cartão</span>
         </div>
       </div>
     </footer>

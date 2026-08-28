@@ -21,10 +21,14 @@ builder.Services.AddIdentity<Utilizador, IdentityRole>(options =>
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
-    // Após login, redirecionar para a página de redirecionamento bonita
     options.LoginPath = "/Identity/Account/Login";
     options.LogoutPath = "/Identity/Account/Logout";
     options.AccessDeniedPath = "/pages/erro.html";
+    options.ExpireTimeSpan = TimeSpan.FromDays(30);
+    options.SlidingExpiration = true;
+    options.Cookie.HttpOnly = true;
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+    options.Cookie.SameSite = SameSiteMode.None;
 });
 
 builder.Services.AddRazorPages();

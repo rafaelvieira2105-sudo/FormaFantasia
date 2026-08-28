@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react'
 export default function Destaque() {
 
     const [destaque, setDestaque] = useState<any>([])
-    
+
 
     useEffect(() => {
         fetch(`/api/Produtos?tag=destaque`)
@@ -43,6 +43,10 @@ export default function Destaque() {
             <div className="highlights-inner">
                 {destaque?.[0] && (
                     <a href={`/produto/${destaque[0].id}`} className="highlight-card">
+                        {destaque[0].fotoUrl && (
+                            <img src={destaque[0].fotoUrl} alt={destaque[0].nome} style={{ width: '100%', height: '200px', objectFit: 'cover', borderRadius: '8px', marginBottom: '1rem' }} />
+                        )}
+                        <div className="highlight-visual hv-greek"></div>
                         <div className="highlight-visual hv-greek"></div>
                         <span className="highlight-badge badge-new">Novidade</span>
                         <h3>{destaque[0].nome}</h3>
@@ -55,6 +59,10 @@ export default function Destaque() {
                 )}
                 {stockoff?.[0] && (
                     <a href={`/produto/${stockoff[0].id}`} className="highlight-card">
+                        {destaque[0].fotoUrl && (
+                            <img src={destaque[0].fotoUrl} alt={destaque[0].nome} style={{ width: '100%', height: '200px', objectFit: 'cover', borderRadius: '8px', marginBottom: '1rem' }} />
+                        )}
+                        <div className="highlight-visual hv-greek"></div>
                         <div className="highlight-visual hv-marble"></div>
                         <span className="highlight-badge badge-promo">Stock Off</span>
                         <h3>{stockoff[0].nome}</h3>
@@ -67,6 +75,10 @@ export default function Destaque() {
                 )}
                 {promo?.[0] && (
                     <a href={`/produto/${promo[0].id}`} className="highlight-card">
+                        {destaque[0].fotoUrl && (
+                            <img src={destaque[0].fotoUrl} alt={destaque[0].nome} style={{ width: '100%', height: '200px', objectFit: 'cover', borderRadius: '8px', marginBottom: '1rem' }} />
+                        )}
+                        <div className="highlight-visual hv-greek"></div>
                         <div className="highlight-visual hv-floral"></div>
                         <span className="highlight-badge badge-dest">Promoção</span>
                         <h3>{promo[0].nome}</h3>

@@ -43,7 +43,7 @@ a {
 
 /*-- Header -- */
 header {
-  background: var(--navy-mid);
+  background: var(--text-secondary);
   position: sticky;
   top: 0;
   z-index: 100

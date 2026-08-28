@@ -45,7 +45,6 @@ export default function Hero() {
           <div style={{ background: 'var(--navy)', width: '100%', height: '100%' }} />
         )}
         <div className="hero-inner">
-          <p className="hero-eyebrow">Decoração de Interiores</p>
           <h1 className="hero-title">
             Transforma<br />o teu espaço
           </h1>

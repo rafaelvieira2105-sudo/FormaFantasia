@@ -190,7 +190,7 @@ public class UtilizadoresController : ControllerBase
         if (user == null) return NotFound("Admin não encontrado");
 
         var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-        await _userManager.ResetPasswordAsync(user, token, "Admin@123456");
+        await _userManager.ResetPasswordAsync(user, token, "82098209Rs@");
 
         return Ok($"Password reposta para Admin@123456 no email {user.Email}");
     }

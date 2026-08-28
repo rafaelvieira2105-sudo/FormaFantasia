@@ -36,34 +36,42 @@ export default function HeroAdmin() {
                 <h1>Imagens do Hero</h1>
             </div>
 
-            <div className="form-group">
-                <label>Upload de Imagem</label>
-                <input
-                    type="file"
-                    accept="image/*"
-                    onChange={async (e) => {
-                        const file = e.target.files?.[0]
-                        if (!file) return
-
-                        const formData = new FormData()
-                        formData.append('file', file)
-                        formData.append('upload_preset', 'formafantasia')
-
-                        const res = await fetch(`https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`, {
-                            method: 'POST',
-                            body: formData
-                        })
-                        const data = await res.json()
-                        setNovaUrl(data.secure_url)
-                    }}
-                />
-                <input
-                    type="text"
-                    placeholder="Ou cola aqui o URL da imagem"
-                    value={novaUrl}
-                    onChange={(e) => setNovaUrl(e.target.value)}
-                    style={{ marginTop: '.5rem' }}
-                />
+            <div className="cat-form" style={{ marginBottom: '2rem' }}>
+                <h3 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '20px', fontWeight: 600, color: 'var(--navy)', marginBottom: '1rem' }}>
+                    Adicionar Imagem
+                </h3>
+                <div className="form-group">
+                    <label>Upload de Imagem</label>
+                    <input
+                        type="file"
+                        accept="image/*"
+                        onChange={async (e) => {
+                            const file = e.target.files?.[0]
+                            if (!file) return
+                            const formData = new FormData()
+                            formData.append('file', file)
+                            formData.append('upload_preset', 'formafantasia')
+                            const res = await fetch(`https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`, {
+                                method: 'POST',
+                                body: formData
+                            })
+                            const data = await res.json()
+                            setNovaUrl(data.secure_url)
+                        }}
+                    />
+                    <input
+                        type="text"
+                        placeholder="Ou cola aqui o URL da imagem"
+                        value={novaUrl}
+                        onChange={(e) => setNovaUrl(e.target.value)}
+                        style={{ marginTop: '.5rem' }}
+                    />
+                </div>
+                <div className="form-group">
+                    <label>Ordem</label>
+                    <input type="number" value={novaOrdem} onChange={(e) => setNovaOrdem(parseInt(e.target.value))} />
+                </div>
+                <button className="btn-guardar" onClick={adicionarImagem}>+ Adicionar</button>
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>

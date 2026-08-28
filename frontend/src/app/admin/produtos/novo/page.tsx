@@ -165,18 +165,38 @@ export default function Novo() {
                         className="btn-guardar"
                         style={{ marginTop: '.5rem', width: '100%' }}
                         onClick={() => {
-                            const widget = (window as any).cloudinary.createUploadWidget(
-                                {
-                                    cloudName: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
-                                    uploadPreset: 'formafantasia',
-                                },
-                                (error: any, result: any) => {
-                                    if (result.event === 'success') {
-                                        setFotoUrl(result.info.secure_url)
-                                    }
+                            if (!(window as any).cloudinary) {
+                                const script = document.createElement('script')
+                                script.src = 'https://widget.cloudinary.com/v2.0/global/all.js'
+                                script.onload = () => {
+                                    const widget = (window as any).cloudinary.createUploadWidget(
+                                        {
+                                            cloudName: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
+                                            uploadPreset: 'formafantasia',
+                                        },
+                                        (error: any, result: any) => {
+                                            if (result?.event === 'success') {
+                                                setFotoUrl(result.info.secure_url)
+                                            }
+                                        }
+                                    )
+                                    widget.open()
                                 }
-                            )
-                            widget.open()
+                                document.body.appendChild(script)
+                            } else {
+                                const widget = (window as any).cloudinary.createUploadWidget(
+                                    {
+                                        cloudName: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
+                                        uploadPreset: 'formafantasia',
+                                    },
+                                    (error: any, result: any) => {
+                                        if (result?.event === 'success') {
+                                            setFotoUrl(result.info.secure_url)
+                                        }
+                                    }
+                                )
+                                widget.open()
+                            }
                         }}
                     >
                         📷 Upload de Foto

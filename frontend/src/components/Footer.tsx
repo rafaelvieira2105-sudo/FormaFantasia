@@ -5,9 +5,9 @@ export default function Footer() {
         <div className="footer-col">
           <div className="footer-col-title">Aplicações</div>
           <ul>
-            <li><a href="/aplicar-papel">Aplicar Papel De Parede</a></li>
-            <li><a href="/aplicar-paineis">Aplicar Painéis Decorativos</a></li>
-            <li><a href="/aplicar-vinil">Aplicar Vinil Decorativo</a></li>
+            <li><a href="/catalogo/aplicar-papel">Aplicar Papel De Parede</a></li>
+            <li><a href="/catalogo/aplicar-paineis">Aplicar Painéis Decorativos</a></li>
+            <li><a href="/catalogo/aplicar-vinil">Aplicar Vinil Decorativo</a></li>
           </ul>
         </div>
         <div className="footer-col">
@@ -19,18 +19,14 @@ export default function Footer() {
             <li><a href="/pagamento-seguro">Pagamento Seguro</a></li>
             <li><a href="/contactos">Contactos</a></li>
             <li><a href="/devolucoes">Devoluções</a></li>
-            <li><a href="/reclamacoes">Livro De Reclamações</a></li>
+            <li><a href="https://www.livroreclamacoes.pt" target="_blank">Livro De Reclamações</a></li>
           </ul>
         </div>
         <div className="footer-col">
           <div className="footer-col-title">Área De Cliente</div>
           <ul>
-            <li><a href="/conta">Informação Pessoal</a></li>
-            <li><a href="/conta">Encomendas</a></li>
-            <li><a href="/conta">Notas De Crédito</a></li>
-            <li><a href="/conta">Endereços</a></li>
-            <li><a href="/conta">Vales De Desconto</a></li>
-            <li><a href="/conta">Meus Alertas</a></li>
+            <li><a href="/conta?tab=informacao">Informação Pessoal</a></li>
+            <li><a href="/conta?tab=encomendas">Encomendas</a></li>
             <li><a href="/cookies">Política De Cookies</a></li>
           </ul>
         </div>

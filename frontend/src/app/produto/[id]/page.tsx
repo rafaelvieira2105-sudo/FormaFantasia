@@ -99,7 +99,7 @@ export default function Produto({ params }: { params: { id: string } }) {
                         <h1>{produto?.nome}</h1>
                         <p>Ref. {produto?.referencia}</p>
                         <div className="produto-preco">
-                            <span className="preco-valor">{produto?.preco} €</span>
+                            <span className="preco-valor">{Number(produto?.preco).toFixed(2)} €</span>
                             <span className="preco-iva">(IVA incluído)</span>
                         </div>
                         <div className="produto-quantidade">
@@ -179,7 +179,11 @@ export default function Produto({ params }: { params: { id: string } }) {
                     </div>
 
                     <div className="produto-tab-content">
-                        {tabActiva === 'descricao' && <p>{produto?.descricao}</p>}
+                        {tabActiva === 'descricao' && (
+                            <div style={{ whiteSpace: 'pre-line', lineHeight: '1.8', fontSize: '14px', color: 'var(--text-secondary)' }}>
+                                {produto?.descricao}
+                            </div>
+                        )}
                         {tabActiva === 'dados' && <p>Dados técnicos do produto.</p>}
                         {tabActiva === 'avaliacoes' && (
                             <div className="avaliacoes">

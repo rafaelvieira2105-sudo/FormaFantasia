@@ -102,10 +102,11 @@ export default function EditarProduto({ params }: { params: { id: string } }) {
                 </div>
                 <div className="form-group">
                     <label>Descrição</label>
-                    <input
-                        type="text"
+                    <textarea
                         value={descricao}
                         onChange={(e) => setDescricao(e.target.value)}
+                        rows={6}
+                        style={{ width: '100%', padding: '.75rem', border: '1px solid var(--border)', borderRadius: '8px', fontFamily: 'inherit', fontSize: '14px', resize: 'vertical' }}
                     />
                 </div>
                 <div className="form-group">

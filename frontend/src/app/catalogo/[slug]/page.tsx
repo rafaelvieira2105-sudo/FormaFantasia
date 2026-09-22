@@ -70,7 +70,7 @@ export default function PaginaCatalogo({ params }: { params: { slug: string } })
                                             <div className="product-card-name">{p.nome}</div>
                                             <div className="product-card-ref">Ref. {p.referencia || 'N/A'}</div>
                                             <div className="product-card-footer">
-                                                <div className="product-card-price">{p.preco} €</div>
+                                                <div className="product-card-price">{Number(p.preco).toFixed(2)} €</div>
                                             </div>
                                         </div>
                                     </div>
